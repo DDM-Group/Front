@@ -6,6 +6,7 @@ import InfoPanel from './InfoPanel'
 import './Library.scss'
 
 export default function Library() {
+    //TODO: make header dynamic (should show path using breadcrumbs)
     return (
         <div className="container">
             <Header as='h2' attached='top'>

@@ -1,8 +1,8 @@
-import React from 'react'
-export default function Footer () {
+import React, { useState } from 'react'
+import Login from './Login'
+
+export default function Home() {
     return (
-        <div>
-            <h1>Hello there, general Kenobi!</h1>
-        </div>
+        <h1>welcome home, buddy</h1>
     )
 }

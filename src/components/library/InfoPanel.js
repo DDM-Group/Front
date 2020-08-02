@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import { useDispatch, useSelector  } from 'react-redux'
 import {fetchLibraryRequest} from '../../redux/modules/library'
 import {Card, Image} from 'semantic-ui-react'
 import eye from '../../assets/img/eye.svg'
 import { Link } from "react-router-dom";
 
-function InfoPanel ({library, error}) {
+export default function InfoPanel () {
     const dispatch = useDispatch()
+    const library = useSelector(state => state.library.list) || []
+    const error = useSelector(state => state.library.error)
     
     useEffect(
         () => {dispatch(fetchLibraryRequest())},
@@ -16,12 +18,16 @@ function InfoPanel ({library, error}) {
     console.log('error :', error);
 
     const cards = library.map(info => {
-        const infoRows = Object.entries(info.data).map(([key, value]) => <p key={key}>{`${key}: ${value}`}</p>)
+        //TODO: перенести логику рендера динамической инфы в отдельный компонент
+        //TODO: реализовать уровни доступа
+        //TODO: добавить сортировку (кастомную в зависимости от модели)
+        const infoRows = Object.entries(info.data)
+            .filter((item, index) => index < 3)
+            .map(([key, value]) => <p key={key}>{`${key}: ${value}`}</p>)
         return (
-            <Card key={info.infoId} as={Link} to={`/library/${info.infoId}`}>
+            <Card key={info._id} as={Link} to={`/library/${info._id}`}>
                 <Card.Content>
                     <Image
-                        floated='right'
                         src={info.photo ? `url(${ info.photo})` : eye}
                     />
                     <Card.Header>{info.name}</Card.Header>
@@ -39,14 +45,3 @@ function InfoPanel ({library, error}) {
         </Card.Group>
     )
 }
-
-const mapStateToProps = state => {
-    console.log('state :', state);
-    return ({
-    library: state.library.list,
-    error: state.library.error
-  })};
-  
-export default connect(mapStateToProps, {
-    fetchLibraryRequest
-})(InfoPanel)
