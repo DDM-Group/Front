@@ -1,13 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import {
-    Link
-  } from "react-router-dom";
-import {
-  Sidebar,
-  Menu,
-  Icon
-} from 'semantic-ui-react'
+import { Link } from "react-router-dom";
+import { Sidebar, Menu, Icon, Image } from 'semantic-ui-react'
 import Login from './Login'
 
 export default function SidebarMenu () {
@@ -35,9 +29,13 @@ export default function SidebarMenu () {
               <Icon name='book' />
               База знаний
           </Menu.Item> 
+          <Menu.Item as={Link} to="/masterclass">
+              <Icon name='graduation cap' /> 
+              Мастерклассы
+          </Menu.Item> 
           { user.id ? <Menu.Item as={Link} to="/user">
-              <Icon name='user circle' />
-              {user.username}
+              {user.photo !== '' ? <Image src={user.photoUrl} avatar size="mini"/> : <Icon name="user"/>}
+              <p> {user.name}</p>
             </Menu.Item> : <Login
             isOpen={isOpenLogin}
             setOpen={setOpenLogin}

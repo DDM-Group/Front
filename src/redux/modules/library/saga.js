@@ -24,9 +24,9 @@ export function* fetchLibraryWorker({type, params = {}}) { //first arg = action
     const response = yield call(createRequest, request);
     console.log('response :', response);
     if (type === ActionTypesLibrary.FETCH_LIBRARY_REQUEST) {
-      yield put(fetchLibrarySuccess(response));
+      yield put(fetchLibrarySuccess(response.map(info => ({...info, photoUrl: `${API_HTTP}/images/${info.photo}`}))));
     } else {
-      yield put(fetchInfoSuccess(response));
+      yield put(fetchInfoSuccess({...response, photoUrl: `${API_HTTP}/images/${response.photo}`}));
     }
   } catch (e) {
     if (type === ActionTypesLibrary.FETCH_LIBRARY_REQUEST) {

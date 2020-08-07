@@ -24,7 +24,7 @@ export default function Info() {
                 rounded={true}
                 size="medium"
                 floated="left"
-                src={info.photo ? `url(${info.photo})` : eye}
+                src={info.photo ? `${info.photoUrl}` : eye}
             />
             <h3>{info.name}</h3>
             <div>
