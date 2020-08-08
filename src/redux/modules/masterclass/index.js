@@ -4,12 +4,17 @@ export const ActionTypesMasterclass = {
     FETCH_MASTERCLASS_FAILURE: 'masterclass/FETCH_MASTERCLASS_FAILURE',
     FETCH_INFO_REQUEST: 'masterclass/FETCH_INFO_REQUEST',
     FETCH_INFO_SUCCESS: 'masterclass/FETCH_INFO_SUCCESS',
-    FETCH_INFO_FAILURE: 'masterclass/FETCH_INFO_FAILURE'
+    FETCH_INFO_FAILURE: 'masterclass/FETCH_INFO_FAILURE',
+    REGISTER_MASTERCLASS_REQUEST: 'masterclass/REGISTER_MASTERCLASS_REQUEST',
+    REGISTER_MASTERCLASS_SUCCESS: 'masterclass/REGISTER_MASTERCLASS_SUCCESS',
+    REGISTER_MASTERCLASS_FAILURE: 'masterclass/REGISTER_MASTERCLASS_FAILURE'
+
   };
   
   export const initialMasterclassState = {
     list: [],
-    info: {}
+    info: {},
+    message: {}
   };
   
   export default function reducer(
@@ -21,27 +26,39 @@ export const ActionTypesMasterclass = {
       case ActionTypesMasterclass.FETCH_MASTERCLASS_SUCCESS:
         return {
           ...state,
-          list: action.payload
+          list: action.payload,
+          message: {}
         };
-  
       case ActionTypesMasterclass.FETCH_MASTERCLASS_FAILURE:
         return {
           ...state,
-          error: action.error
+          message: { failure: true, text: action.error.message}
         };
 
       case ActionTypesMasterclass.FETCH_INFO_SUCCESS:
         return {
           ...state,
-          info: action.payload
+          info: action.payload,
+          message: {}
         };
-
       case ActionTypesMasterclass.FETCH_INFO_FAILURE:
         return {
           ...state,
-          error: action.error
+          message: { failure: true, text: action.error.message}
         };
-  
+
+      case ActionTypesMasterclass.REGISTER_MASTERCLASS_SUCCESS:
+        return {
+          ...state,
+          info: action.payload,
+          message: { failure: false, text: 'Вы успешно записисались на мастеркласс!' }
+        }
+      case ActionTypesMasterclass.REGISTER_MASTERCLASS_FAILURE:
+        return {
+          ...state,
+          message: { failure: true, text: action.error.message}
+        }
+
       default:
         return state;
     }
@@ -74,5 +91,20 @@ export const ActionTypesMasterclass = {
   
   export const fetchInfoFailure = (error) => ({
     type: ActionTypesMasterclass.FETCH_INFO_FAILURE,
+    error
+  });
+  
+  export const registerMasterclassRequest = (params) => ({
+    type: ActionTypesMasterclass.REGISTER_MASTERCLASS_REQUEST,
+    params
+  });
+  
+  export const registerMasterclassSuccess = (payload) => ({
+    type: ActionTypesMasterclass.REGISTER_MASTERCLASS_SUCCESS,
+    payload
+  });
+  
+  export const registerMasterclassFailure = (error) => ({
+    type: ActionTypesMasterclass.REGISTER_MASTERCLASS_FAILURE,
     error
   });

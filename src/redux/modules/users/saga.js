@@ -23,7 +23,7 @@ export function* singUpUserWorker({type, userInfo = {}}) {
         console.log('response :>> ', response);
         yield put(signUpUserSuccess(response))
     } catch (e) {;
-        yield put(signUpUserFailure(e));
+        yield put(signUpUserFailure((e.response && e.response.data) || e));
     }
 }
 
@@ -39,7 +39,7 @@ export function* singInUserWorker({type, userInfo = {}}) {
       console.log('response :>> ', response);
       yield put(signInUserSuccess({...response, photoUrl: `${API_HTTP}/images/${response.photo}`}))
   } catch (e) {;
-      yield put(signInUserFailure(e));
+      yield put(signInUserFailure((e.response && e.response.data) || e));
   }
 }
 
@@ -54,7 +54,7 @@ export function* autoupdateUserWorker({type}) {
       console.log('response :>> ', response);
       yield put(autoupdateUserSuccess({...response, photoUrl: `${API_HTTP}/images/${response.photo}`}))
   } catch (e) {;
-      yield put(autoupdateUserFailure(e));
+      yield put(autoupdateUserFailure((e.response && e.response.data) || e));
   }
 }
 

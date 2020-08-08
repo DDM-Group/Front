@@ -1,21 +1,17 @@
-import React, {useEffect} from 'react'
-import { Container, Image, Table, Header, Icon } from 'semantic-ui-react'
-import {useParams} from 'react-router-dom'
+import React, {useState} from 'react'
+import { Button, Header, Image, Modal, Container, Table, Icon, Message, Card, List } from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux'
-import {fetchInfoRequest} from '../../redux/modules/masterclass'
+import {registerMasterclassRequest} from '../../redux/modules/masterclass'
 import eye from '../../assets/img/eye.svg'
 
-export default function Info() {
-    const info = useSelector(state => state.masterclass.info)
-    const error = useSelector(state => state.masterclass.error)
-    const { infoId } = useParams()
+export default function Info ({info}) {
+    const [open, setOpen] = useState(false)
+    const message = useSelector(state => state.masterclass.message)
+    const user = useSelector(state => state.users.user)
     const dispatch = useDispatch()
-    
-    useEffect(
-        () => {dispatch(fetchInfoRequest({_id: infoId}))},
-        []
-    )
 
+    const isButtonDisabled = info.students && ((info.students.length >= info.max_students) || (info.students.findIndex(stud => stud.id === user.id) !== -1));
+    const messageBlock = <Message positive={!message.failure} negative={message.failure}><Message.Header>{message.text}</Message.Header></Message>
     const infoRows = Object.entries(info.data || {}).map(([key, value]) => <p key={key}>{`${key}: ${value}`}</p>);
     const students = info.students ? info.students.map(
         student => (
@@ -34,33 +30,81 @@ export default function Info() {
             </Table.Cell>
           </Table.Row>)
     ) : [];
-    console.log('info :>> ', info);
+    
+    const card = (
+        <Card >
+            <Card.Content>
+                <Image
+                    src={info.photo ? `${info.photoUrl}` : eye}
+                    style={{marginBottom: '1rem'}}
+                />
+                <Card.Header>{info.name}</Card.Header>
+                <Card.Meta>{info.category}</Card.Meta>
+                <Card.Description>
+                  <List>
+                    <List.Item>
+                      <List.Icon name="users"/>
+                      <List.Content>
+                          Количество человек: {info.students.length}/{info.max_students}
+                      </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Icon name="clock" />
+                        <List.Content>
+                          Дата: {info.date}
+                        </List.Content>
+                    </List.Item>
+                    {infoRows.filter((item, index) => index < 2)}
+                  </List>
+                </Card.Description>
+            </Card.Content>
+        </Card>
+        )
+
     return (
-        <Container>
-            <Image
-                rounded={true}
-                size="medium"
-                floated="left"
-                src={info.photo ? `${info.photoUrl}` : eye}
-            />
-            <h3>{info.name}</h3>
-            <div>
-              <p>Количество человек: {(info.students && info.students.length) || 0}/{info.max_students}</p>
-              <p>Дата: {info.date}</p>
-              <div>
-              {infoRows}
-              <Table basic='very' celled collapsing>
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell>Записавшиеся наблюдатели</Table.HeaderCell>
-                            </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                            {students}
-                        </Table.Body>
-                        </Table>
-              </div>
-            </div>
-        </Container>
+        <Modal
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        open={open}
+        trigger={card}
+        >
+            <Modal.Header>{info.name}</Modal.Header>
+            <Modal.Content image>
+                <Image size='medium' src={info.photo ? `${info.photoUrl}` : eye} wrapped />
+                <Modal.Description>
+                    <p>Количество человек: {(info.students && info.students.length) || 0}/{info.max_students}</p>
+                    <p>Дата: {info.date}</p>
+                    {infoRows}
+                    <Table size="large">
+                      <Table.Header>
+                          <Table.Row>
+                              <Table.HeaderCell>Записавшиеся наблюдатели</Table.HeaderCell>
+                          </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                          {students}
+                      </Table.Body>
+                    </Table>
+                    {message && message.text && message.text !== '' ? messageBlock : <></>}
+                </Modal.Description>
+            </Modal.Content>
+            <Modal.Actions>
+                <Button
+                    color='black'
+                    content="Закрыть"
+                    icon='angle left'
+                    onClick={() => setOpen(false)}
+                />
+                <Button 
+                    content="Записаться" 
+                    labelPosition='right'
+                    icon='checkmark'
+                    positive
+                    disabled={isButtonDisabled}
+                    onClick={() => dispatch(registerMasterclassRequest({_id: info._id}))}
+                />
+            </Modal.Actions>
+        </Modal>
+    
     )
 }

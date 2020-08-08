@@ -30,9 +30,9 @@ export function* fetchLibraryWorker({type, params = {}}) { //first arg = action
     }
   } catch (e) {
     if (type === ActionTypesLibrary.FETCH_LIBRARY_REQUEST) {
-      yield put(fetchLibraryFailure(e));
+      yield put(fetchLibraryFailure((e.response && e.response.data) || e));
     } else {
-      yield put(fetchInfoFailure(e));
+      yield put(fetchInfoFailure((e.response && e.response.data) || e));
     }
   }
 }
