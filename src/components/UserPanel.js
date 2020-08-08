@@ -16,7 +16,7 @@ export default function UserPanel() {
                 rounded={true}
                 size="medium"
                 floated="left"
-                src={user.photo ? `url(${user.photo})` : eye}
+                src={user.photo && user.photo !== '' ? user.photoUrl : eye}
             />
             <h3>Имя пользователя: {user.username}</h3>
             <div>

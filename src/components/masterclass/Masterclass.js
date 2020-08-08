@@ -1,17 +1,17 @@
 import React from 'react'
-import { Route } from "react-router-dom";
+import { Route } from "react-router-dom"
 import { Header } from 'semantic-ui-react'
 import InfoPanel from './InfoPanel'
-import './Library.scss'
+import './Masterclass.scss'
 
-export default function Library() {
+export default function Masterclass() {
     //TODO: make header dynamic (should show path using breadcrumbs)
     return (
         <div className="container">
             <Header as='h2' attached='top'>
-                База знаний
+                Мастерклассы
             </Header>
-            <Route exact path="/library">
+            <Route exact path="/masterclass">
                 <InfoPanel/>
             </Route>
         </div>

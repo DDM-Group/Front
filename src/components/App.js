@@ -11,6 +11,7 @@ import {
 import SidebarMenu from './SidebarMenu'
 import Home from './Home'
 import Library from './library/Library'
+import Masterclass from './masterclass/Masterclass'
 import UserPanel from './UserPanel'
 import '../assets/styles/App.scss'
 import {autoupdateUserRequest} from '../redux/modules/users'
@@ -35,6 +36,9 @@ export default function App() {
                 </Route>
                 <Route path="/user">
                   <UserPanel />
+                </Route>
+                <Route path="/masterclass">
+                  <Masterclass />
                 </Route>
                 <Route path="/">
                   <Home />
