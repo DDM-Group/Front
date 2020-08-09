@@ -13,6 +13,7 @@ import Home from './Home'
 import Library from './library/Library'
 import Masterclass from './masterclass/Masterclass'
 import UserPanel from './UserPanel'
+import Operation from './operation/Operation'
 import '../assets/styles/App.scss'
 import {autoupdateUserRequest} from '../redux/modules/users'
 import {useDispatch, useSelector} from 'react-redux'
@@ -39,6 +40,9 @@ export default function App() {
                 </Route>
                 <Route path="/masterclass">
                   <Masterclass />
+                </Route>
+                <Route path="/operation">
+                   <Operation />
                 </Route>
                 <Route path="/">
                   <Home />

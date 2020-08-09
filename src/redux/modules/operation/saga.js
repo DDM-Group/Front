@@ -1,0 +1,83 @@
+import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { API_HTTP } from '../../../configs/environment';
+import {
+  ActionTypesOperation,
+  fetchOperationFailure,
+  fetchOperationSuccess, 
+  fetchInfoFailure, 
+  fetchInfoSuccess,
+  registerOperationSuccess,
+  registerOperationFailure
+} from './index';
+import {createRequest} from '../../rootSagas';
+
+export function* fetchOperationWorker({type, params = {}}) { //first arg = action
+  const { _id } = params 
+  let url = _id ? `${API_HTTP}/operation/${_id}` : `${API_HTTP}/operation`
+  if (params.type) {
+    url = url.concat(`?type=${params.type}`)
+  }
+  const request = {
+    method: 'get',
+    url
+  };
+
+  try {
+    const response = yield call(createRequest, request);
+    console.log('response :', response);
+    if (type === ActionTypesOperation.FETCH_OPERATION_REQUEST) {
+      yield put(fetchOperationSuccess(response.map(info => (
+        {
+          ...info,
+          photoUrl: `${API_HTTP}/images/${info.photo}`,
+          users: info.users.map( user => ({...user, photoUrl: `${API_HTTP}/images/${user.photo}`}))
+        }
+        )
+      )));
+    } else {
+      yield put(fetchInfoSuccess(
+        {
+          ...response,
+          photoUrl: `${API_HTTP}/images/${response.photo}`,
+          users: response.users.map( user => ({...user, photoUrl: `${API_HTTP}/images/${user.photo}`}))
+        }
+      ));
+    }
+  } catch (e) {
+    if (type === ActionTypesOperation.FETCH_OPERATION_REQUEST) {
+      yield put(fetchOperationFailure((e.response && e.response.data) || e));
+    } else {
+      yield put(fetchInfoFailure((e.response && e.response.data) || e));
+    }
+  }
+}
+
+export function* registerOperationWorker({type, params = {}}) {
+  const { _id } = params 
+  const url = `${API_HTTP}/operation/${_id}/register`;
+  const request = {
+      method: 'post',
+      url
+  };
+  try {
+      const response = yield call(createRequest, request);
+      console.log('response :>> ', response);
+      yield put(registerOperationSuccess(
+        {
+          ...response,
+          photoUrl: `${API_HTTP}/images/${response.photo}`,
+          users: response.users.map( user => ({...user, photoUrl: `${API_HTTP}/images/${user.photo}`}))
+        }
+      ))
+  } catch (e) {
+    yield put(registerOperationFailure((e.response && e.response.data) || e));
+  }
+}
+
+export function* watchOperationActionsSaga() {
+  yield all([
+    takeEvery(ActionTypesOperation.FETCH_OPERATION_REQUEST, fetchOperationWorker),
+    takeEvery(ActionTypesOperation.FETCH_INFO_REQUEST, fetchOperationWorker),
+    takeEvery(ActionTypesOperation.REGISTER_OPERATION_REQUEST, registerOperationWorker)
+  ]);
+}
