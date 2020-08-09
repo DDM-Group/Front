@@ -21,6 +21,13 @@ export default function SidebarMenu () {
           width='thin'
           className="leftSidebar"
       >
+        { user.id ? <Menu.Item as={Link} to="/user">
+            {user.photo !== '' ? <Image src={user.photoUrl} avatar size="mini"/> : <Icon name="user"/>}
+            <p> {user.name}</p>
+          </Menu.Item> : <Login
+          isOpen={isOpenLogin}
+          setOpen={setOpenLogin}
+        />}
           <Menu.Item as={Link} to="/">
               <Icon name='home' />
               Стартовая страница
@@ -33,13 +40,10 @@ export default function SidebarMenu () {
               <Icon name='graduation cap' /> 
               Мастерклассы
           </Menu.Item> 
-          { user.id ? <Menu.Item as={Link} to="/user">
-              {user.photo !== '' ? <Image src={user.photoUrl} avatar size="mini"/> : <Icon name="user"/>}
-              <p> {user.name}</p>
-            </Menu.Item> : <Login
-            isOpen={isOpenLogin}
-            setOpen={setOpenLogin}
-          />}
+          <Menu.Item as={Link} to="/operation">
+              <Icon name='crosshairs' />
+              Высадки
+          </Menu.Item>
       </Sidebar>
     )
 }

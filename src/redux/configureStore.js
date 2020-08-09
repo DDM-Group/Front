@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import library from './modules/library';
 import users from './modules/users';
 import masterclass from './modules/masterclass';
+import operation from './modules/operation';
 import {initSagas} from './initSagas';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -14,7 +15,8 @@ export default function configureStore() {
   const rootReducer = combineReducers({
     library,
     users,
-    masterclass
+    masterclass,
+    operation
   });
   const store = compose(
     enhancer
