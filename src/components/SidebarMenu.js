@@ -44,6 +44,10 @@ export default function SidebarMenu () {
               <Icon name='crosshairs' />
               Высадки
           </Menu.Item>
+          <Menu.Item as={Link} to="/operation/view">
+              <Icon name='shield alternate' />
+              Боевой интерфейс
+          </Menu.Item>
       </Sidebar>
     )
 }

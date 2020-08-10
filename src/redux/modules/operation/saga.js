@@ -7,7 +7,9 @@ import {
   fetchInfoFailure, 
   fetchInfoSuccess,
   registerOperationSuccess,
-  registerOperationFailure
+  registerOperationFailure,
+  fetchOperationViewFailure,
+  fetchOperationViewSuccess, 
 } from './index';
 import {createRequest} from '../../rootSagas';
 
@@ -74,10 +76,33 @@ export function* registerOperationWorker({type, params = {}}) {
   }
 }
 
+export function* fetchOperationViewWorker({type, params = {}}) {
+  const url = `${API_HTTP}/operation/view`;
+  const request = {
+      method: 'get',
+      url
+  };
+  try {
+      const response = yield call(createRequest, request);
+      console.log('response :>> ', response);
+      yield put(fetchOperationViewSuccess(
+        response.map(
+          operation => ({
+            ...operation,
+            users: operation.users.map( user => ({...user, gifUrl: `${API_HTTP}/gifs/${user.gif}`}))
+          })
+        )
+      ))
+  } catch (e) {
+    yield put(fetchOperationViewFailure((e.response && e.response.data) || e));
+  }
+}
+
 export function* watchOperationActionsSaga() {
   yield all([
     takeEvery(ActionTypesOperation.FETCH_OPERATION_REQUEST, fetchOperationWorker),
     takeEvery(ActionTypesOperation.FETCH_INFO_REQUEST, fetchOperationWorker),
-    takeEvery(ActionTypesOperation.REGISTER_OPERATION_REQUEST, registerOperationWorker)
+    takeEvery(ActionTypesOperation.REGISTER_OPERATION_REQUEST, registerOperationWorker),
+    takeEvery(ActionTypesOperation.FETCH_OPERATION_VIEW_REQUEST, fetchOperationViewWorker)
   ]);
 }
