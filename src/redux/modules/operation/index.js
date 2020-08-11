@@ -7,20 +7,25 @@ export const ActionTypesOperation = {
     FETCH_INFO_FAILURE: 'masterclass/FETCH_INFO_FAILURE',
     REGISTER_OPERATION_REQUEST: 'masterclass/REGISTER_OPERATION_REQUEST',
     REGISTER_OPERATION_SUCCESS: 'masterclass/REGISTER_OPERATION_SUCCESS',
-    REGISTER_OPERATION_FAILURE: 'masterclass/REGISTER_OPERATION_FAILURE'
+    REGISTER_OPERATION_FAILURE: 'masterclass/REGISTER_OPERATION_FAILURE',
+    FETCH_OPERATION_VIEW_REQUEST: 'masterclass/FETCH_OPERATION_VIEW_REQUEST',
+    FETCH_OPERATION_VIEW_SUCCESS: 'masterclass/FETCH_OPERATION_VIEW_SUCCESS',
+    FETCH_OPERATION_VIEW_FAILURE: 'masterclass/FETCH_OPERATION_VIEW_FAILURE',
 
   };
   
   export const initialOperationState = {
     list: [],
     info: {},
-    message: {}
+    message: {},
+    view: []
   };
   
   export default function reducer(
     state = initialOperationState,
     action
   ) {
+    console.log('action :>> ', action);
     switch (action.type) {
   
       case ActionTypesOperation.FETCH_OPERATION_SUCCESS:
@@ -58,6 +63,18 @@ export const ActionTypesOperation = {
           ...state,
           message: { failure: true, text: action.error.message}
         }
+  
+      case ActionTypesOperation.FETCH_OPERATION_VIEW_SUCCESS:
+        return {
+          ...state,
+          view: action.payload,
+          message: {}
+        };
+      case ActionTypesOperation.FETCH_OPERATION_VIEW_FAILURE:
+        return {
+          ...state,
+          message: { failure: true, text: action.error.message}
+        };
 
       default:
         return state;
@@ -106,5 +123,20 @@ export const ActionTypesOperation = {
   
   export const registerOperationFailure = (error) => ({
     type: ActionTypesOperation.REGISTER_OPERATION_FAILURE,
+    error
+  });
+
+  
+  export const fetchOperationViewRequest = () => ({
+    type: ActionTypesOperation.FETCH_OPERATION_VIEW_REQUEST
+  });
+  
+  export const fetchOperationViewSuccess = (payload) => ({
+    type: ActionTypesOperation.FETCH_OPERATION_VIEW_SUCCESS,
+    payload
+  });
+  
+  export const fetchOperationViewFailure = (error) => ({
+    type: ActionTypesOperation.FETCH_OPERATION_VIEW_FAILURE,
     error
   });
