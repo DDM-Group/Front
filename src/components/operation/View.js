@@ -10,6 +10,7 @@ export default function View () {
     
     useEffect(
         () => {
+            dispatch(fetchOperationViewRequest())
             const interval = setInterval(
               () => dispatch(fetchOperationViewRequest()),
               10000

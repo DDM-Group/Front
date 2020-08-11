@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {
     BrowserRouter as Router,
     Switch,
@@ -23,8 +23,9 @@ export default function App() {
     const token = localStorage.getItem('token');
     const user = useSelector(state => state.users.user)
     console.log('user :>> ', user);
-    console.log('token && !user :>> ', token && !user.id);
-    if (token && !user.id) dispatch(autoupdateUserRequest())
+    useEffect(() => {
+      dispatch(autoupdateUserRequest())
+    }, [token, user.id])
     return (
       <Router>
         <Sidebar.Pushable>
