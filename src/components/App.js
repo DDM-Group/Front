@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import { Segment, Sidebar } from 'semantic-ui-react'
 import SidebarMenu from './SidebarMenu'
 import Library from './library/Library'
+import ScoutingInfo from "./scouting/ScoutingInfo";
 import Masterclass from './masterclass/Masterclass'
 import UserPanel from './UserPanel'
 import Operation from './operation/Operation'
 import '../assets/styles/App.scss'
 import {autoupdateUserRequest} from '../redux/modules/users'
 import {useDispatch, useSelector} from 'react-redux'
+
 
 export default function App() {
     const dispatch = useDispatch();
@@ -28,6 +30,9 @@ export default function App() {
                 <Route path="/library">
                   <Library />
                 </Route>
+                  <Route path="/scouting">
+                      <ScoutingInfo/>
+                  </Route>
                 <Route path="/user">
                   <UserPanel />
                 </Route>

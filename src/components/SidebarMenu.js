@@ -31,7 +31,11 @@ export default function SidebarMenu () {
           <Menu.Item as={Link} to="/library">
               <Icon name='book' />
               База знаний
-          </Menu.Item> 
+          </Menu.Item>
+          <Menu.Item as={Link} to="/scouting">
+              <Icon name='user secret'/>
+              Разведка
+          </Menu.Item>
           <Menu.Item as={Link} to="/masterclass">
               <Icon name='graduation cap' /> 
               Мастерклассы
