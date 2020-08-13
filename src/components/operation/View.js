@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import {fetchOperationViewRequest} from '../../redux/modules/operation'
-import {Grid} from 'semantic-ui-react'
+import { Grid, Loader} from 'semantic-ui-react'
 import ViewCard from './ViewCard'
 
 export default function View () {
@@ -33,8 +33,11 @@ export default function View () {
     //     </Grid.Row>)
     // }
     return (
-        <Grid columns={2} divided>
-            {columns}
-        </Grid>
+        <>
+            <Loader active={view.length === 0}/>
+            <Grid columns={2} divided>
+                {columns}
+            </Grid>
+        </>
     )
 }

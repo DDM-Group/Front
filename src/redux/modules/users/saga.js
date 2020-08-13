@@ -7,7 +7,9 @@ import {
   signInUserSuccess, 
   signInUserFailure,
   autoupdateUserSuccess,
-  autoupdateUserFailure
+  autoupdateUserFailure,
+  fetchUserPageSuccess,
+  fetchUserPageFailure
 } from './index';
 import {createRequest} from '../../rootSagas';
 
@@ -58,10 +60,31 @@ export function* autoupdateUserWorker({type}) {
   }
 }
 
+export function* fetchUserPageWorker({type, userId}) {
+  try {
+    const examRequest = {
+        method: 'get',
+        url: `${API_HTTP}/exam/user/${userId}`
+    };
+    const exams = yield call(createRequest, examRequest);
+    console.log('exams :>> ', exams);
+    const operationsRequest = {
+        method: 'get',
+        url: `${API_HTTP}/operation/user/${userId}`
+    };
+    const operations = yield call(createRequest, operationsRequest);
+    console.log('operations :>> ', operations);
+    yield put(fetchUserPageSuccess({exams, operations}))
+  } catch (e) {
+    yield put(fetchUserPageFailure((e.response && e.response.data) || e));
+  }
+}
+
 export function* watchUsersActionsSaga() {
   yield all([
     takeEvery(ActionTypesUsers.SIGN_UP_USER_REQUEST, singUpUserWorker),
     takeEvery(ActionTypesUsers.SIGN_IN_USER_REQUEST, singInUserWorker),
-    takeEvery(ActionTypesUsers.AUTOUPDATE_USER_REQUEST, autoupdateUserWorker)
+    takeEvery(ActionTypesUsers.AUTOUPDATE_USER_REQUEST, autoupdateUserWorker),
+    takeEvery(ActionTypesUsers.FETCH_USER_PAGE_REQUEST, fetchUserPageWorker)
   ]);
 }

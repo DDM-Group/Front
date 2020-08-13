@@ -1,3 +1,5 @@
+import {ActionTypesUsers} from '../users'
+
 export const ActionTypesOperation = {
     FETCH_OPERATION_REQUEST: 'masterclass/FETCH_OPERATION_REQUEST',
     FETCH_OPERATION_SUCCESS: 'masterclass/FETCH_OPERATION_SUCCESS',
@@ -33,24 +35,24 @@ export const ActionTypesOperation = {
           ...state,
           list: action.payload,
           message: {}
-        };
+        }
       case ActionTypesOperation.FETCH_OPERATION_FAILURE:
         return {
           ...state,
           message: { failure: true, text: action.error.message}
-        };
+        }
 
       case ActionTypesOperation.FETCH_INFO_SUCCESS:
         return {
           ...state,
           info: action.payload,
           message: {}
-        };
+        }
       case ActionTypesOperation.FETCH_INFO_FAILURE:
         return {
           ...state,
           message: { failure: true, text: action.error.message}
-        };
+        }
 
       case ActionTypesOperation.REGISTER_OPERATION_SUCCESS:
         return {
@@ -69,12 +71,17 @@ export const ActionTypesOperation = {
           ...state,
           view: action.payload,
           message: {}
-        };
+        }
       case ActionTypesOperation.FETCH_OPERATION_VIEW_FAILURE:
         return {
           ...state,
           message: { failure: true, text: action.error.message}
-        };
+        }
+      
+      case ActionTypesUsers.SIGN_OUT_USER_REQUEST:
+        return {
+          ...initialOperationState
+        }
 
       default:
         return state;

@@ -14,9 +14,9 @@ const enhancer = composeWithDevTools(applyMiddleware(...middleWares));
 export default function configureStore() {
   const rootReducer = combineReducers({
     library,
-    users,
     masterclass,
-    operation
+    operation,
+    users
   });
   const store = compose(
     enhancer

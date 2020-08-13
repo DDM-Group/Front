@@ -1,3 +1,5 @@
+import {ActionTypesUsers} from '../users'
+
 export const ActionTypesMasterclass = {
     FETCH_MASTERCLASS_REQUEST: 'masterclass/FETCH_MASTERCLASS_REQUEST',
     FETCH_MASTERCLASS_SUCCESS: 'masterclass/FETCH_MASTERCLASS_SUCCESS',
@@ -59,6 +61,11 @@ export const ActionTypesMasterclass = {
           message: { failure: true, text: action.error.message}
         }
 
+      case ActionTypesUsers.SIGN_OUT_USER_REQUEST:
+        return {
+          ...initialMasterclassState
+        }
+    
       default:
         return state;
     }

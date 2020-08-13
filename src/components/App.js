@@ -1,15 +1,7 @@
 import React, {useEffect} from 'react'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-  } from "react-router-dom"
-import {
-    Segment,
-    Sidebar
-} from 'semantic-ui-react'
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+import { Segment, Sidebar } from 'semantic-ui-react'
 import SidebarMenu from './SidebarMenu'
-import Home from './Home'
 import Library from './library/Library'
 import Masterclass from './masterclass/Masterclass'
 import UserPanel from './UserPanel'
@@ -46,7 +38,7 @@ export default function App() {
                    <Operation />
                 </Route>
                 <Route path="/">
-                  <Home />
+                    <Redirect to="/library" />
                 </Route>
               </Switch>
             </Segment>

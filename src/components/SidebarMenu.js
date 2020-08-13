@@ -28,10 +28,6 @@ export default function SidebarMenu () {
           isOpen={isOpenLogin}
           setOpen={setOpenLogin}
         />}
-          <Menu.Item as={Link} to="/">
-              <Icon name='home' />
-              Стартовая страница
-          </Menu.Item>
           <Menu.Item as={Link} to="/library">
               <Icon name='book' />
               База знаний

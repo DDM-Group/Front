@@ -1,3 +1,5 @@
+import {ActionTypesUsers} from '../users'
+
 export const ActionTypesLibrary = {
     FETCH_LIBRARY_REQUEST: 'library/FETCH_LIBRARY_REQUEST',
     FETCH_LIBRARY_SUCCESS: 'library/FETCH_LIBRARY_SUCCESS',
@@ -41,6 +43,11 @@ export const ActionTypesLibrary = {
           ...state,
           error: action.error
         };
+
+      case ActionTypesUsers.SIGN_OUT_USER_REQUEST:
+        return {
+          ...initialLibraryState
+        }
   
       default:
         return state;
