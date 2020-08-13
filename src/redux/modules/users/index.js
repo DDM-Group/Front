@@ -11,7 +11,11 @@ export const ActionTypesUsers = {
     AUTOUPDATE_USER_SUCCESS: 'users/AUTOUPDATE_USER_SUCCESS',
     AUTOUPDATE_USER_FAILURE: 'users/AUTOUPDATE_USER_FAILURE',
 
-    SIGN_OUT_USER_REQUEST: 'users/SIGN_OUT_USER_REQUEST'
+    SIGN_OUT_USER_REQUEST: 'users/SIGN_OUT_USER_REQUEST',
+
+    FETCH_USER_PAGE_REQUEST: 'users/FETCH_USER_PAGE_REQUEST',
+    FETCH_USER_PAGE_SUCCESS: 'users/FETCH_USER_PAGE_SUCCESS',
+    FETCH_USER_PAGE_FAILURE: 'users/FETCH_USER_PAGE_FAILURE',
 };
 
 export const initialUserState = {
@@ -54,6 +58,18 @@ export default function reducer(
             loggedIn: false,
             user: {}
           }
+
+        case ActionTypesUsers.FETCH_USER_PAGE_SUCCESS:
+          return {
+            ...state,
+            page: action.payload
+          }
+        case ActionTypesUsers.FETCH_USER_PAGE_FAILURE:
+          return {
+            ...state,
+            error: action.error
+          }
+        
         default: 
           return state;
     }
@@ -100,4 +116,17 @@ export const autoupdateUserFailure = (error) => ({
 
 export const signOutUserRequest = () => ({
   type: ActionTypesUsers.SIGN_OUT_USER_REQUEST
+})
+
+export const fetchUserPageRequest = (userId) => ({
+  type: ActionTypesUsers.FETCH_USER_PAGE_REQUEST,
+  userId
+})
+export const fetchUserPageSuccess = (payload) => ({
+  type: ActionTypesUsers.FETCH_USER_PAGE_SUCCESS,
+  payload
+})
+export const fetchUserPageFailure = (error) => ({
+  type: ActionTypesUsers.FETCH_USER_PAGE_FAILURE,
+  error
 })

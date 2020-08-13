@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector  } from 'react-redux'
 import {fetchLibraryRequest} from '../../redux/modules/library'
-import {Card, Image, List} from 'semantic-ui-react'
+import {Card, Loader} from 'semantic-ui-react'
 import Info from './Info'
 
 export default function InfoPanel () {
@@ -22,8 +22,11 @@ export default function InfoPanel () {
         )
     });
     return (
-        <Card.Group stackable={true} className={"cardGroup"}>
-            {cards}
-        </Card.Group>
+        <>
+            <Loader active={library.length === 0}/>
+            <Card.Group stackable={true} className={"cardGroup"}>
+                {cards}
+            </Card.Group>
+        </>
     )
 }

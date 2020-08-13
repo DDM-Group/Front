@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector  } from 'react-redux'
 import {fetchMasterclassRequest} from '../../redux/modules/masterclass'
-import {Card} from 'semantic-ui-react'
+import { Card, Loader } from 'semantic-ui-react'
 import Info from './Info'
 
 function InfoPanel() {
@@ -22,9 +22,12 @@ function InfoPanel() {
         )
     });
     return (
-        <Card.Group stackable={true} className={"cardGroup"}>
-            {cards}
-        </Card.Group>
+        <>
+            <Loader active={masterclass.length === 0}/>
+            <Card.Group stackable={true} className={"cardGroup"}>
+                {cards}
+            </Card.Group>
+        </>
     )
 }
 
