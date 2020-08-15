@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import { Segment, Sidebar } from 'semantic-ui-react'
 import SidebarMenu from './SidebarMenu'
 import Library from './library/Library'
+import Scouting from './scouting/ScoutingInfo'
 import Masterclass from './masterclass/Masterclass'
 import UserPanel from './UserPanel'
 import Operation from './operation/Operation'
@@ -29,6 +30,9 @@ export default function App() {
                 <Route path="/library">
                   <Library />
                 </Route>
+                  <Route path="/scouting">
+                      <Scouting/>
+                  </Route>
                 <Route path="/user">
                   <UserPanel />
                 </Route>
