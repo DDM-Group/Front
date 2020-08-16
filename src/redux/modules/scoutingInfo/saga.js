@@ -1,16 +1,16 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { API_HTTP } from '../../../configs/environment';
 import {
-    ActionTypesScouting,
-    fetchScoutingFailure,
-    fetchScoutingSuccess,
+    ActionTypesScoutingInfo,
+    fetchScoutingInfoFailure,
+    fetchScoutingInfoSuccess,
     fetchInfoFailure,
     fetchInfoSuccess
 } from './index';
 import {createRequest} from '../../rootSagas';
 
 
-export function* fetchScoutingWorker({type, params = {}}) { //first arg = action
+export function* fetchScoutingInfoWorker({type, params = {}}) { //first arg = action
     const { _id } = params
     let url = _id ? `${API_HTTP}/scoutingInfo/${_id}` : `${API_HTTP}/scoutingInfo`
     if (params.type) {
@@ -24,23 +24,23 @@ export function* fetchScoutingWorker({type, params = {}}) { //first arg = action
     try {
         const response = yield call(createRequest, request);
         console.log('response :', response);
-        if (type === ActionTypesScouting.FETCH_SCOUTING_REQUEST) {
-            yield put(fetchScoutingSuccess(response.map(info => ({...info, photoUrl: `${API_HTTP}/images/${info.photo}`}))));
+        if (type === ActionTypesScoutingInfo.FETCH_SCOUTINGINFO_REQUEST) {
+            yield put(fetchScoutingInfoSuccess(response.map(info => ({...info, photoUrl: `${API_HTTP}/images/${info.photo}`}))));
         } else {
             yield put(fetchInfoSuccess({...response, photoUrl: `${API_HTTP}/images/${response.photo}`}));
         }
     } catch (e) {
-        if (type === ActionTypesScouting.FETCH_SCOUTING_REQUEST) {
-            yield put(fetchScoutingFailure((e.response && e.response.data) || e));
+        if (type === ActionTypesScoutingInfo.FETCH_SCOUTINGINFO_REQUEST) {
+            yield put(fetchScoutingInfoFailure((e.response && e.response.data) || e));
         } else {
             yield put(fetchInfoFailure((e.response && e.response.data) || e));
         }
     }
 }
 
-export function* watchScoutingActionsSaga() {
+export function* watchScoutingInfoActionsSaga() {
     yield all([
-        takeEvery(ActionTypesScouting.FETCH_SCOUTING_REQUEST, fetchScoutingWorker),
-        takeEvery(ActionTypesScouting.FETCH_INFO_REQUEST, fetchScoutingWorker)
+        takeEvery(ActionTypesScoutingInfo.FETCH_SCOUTINGINFO_REQUEST, fetchScoutingInfoWorker),
+        takeEvery(ActionTypesScoutingInfo.FETCH_INFO_REQUEST, fetchScoutingInfoWorker)
     ]);
 }

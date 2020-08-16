@@ -2,7 +2,8 @@ import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import createSagaMiddleware from 'redux-saga';
 import library from './modules/library';
-import scouting from './modules/scouting'
+import scoutingInfo from './modules/scoutingInfo'
+import scoutingRequest from './modules/scoutingRequest'
 import users from './modules/users';
 import masterclass from './modules/masterclass';
 import operation from './modules/operation';
@@ -15,7 +16,8 @@ const enhancer = composeWithDevTools(applyMiddleware(...middleWares));
 export default function configureStore() {
   const rootReducer = combineReducers({
     library,
-    scouting,
+    scoutingInfo,
+    scoutingRequest,
     masterclass,
     operation,
     users
