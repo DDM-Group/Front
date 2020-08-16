@@ -23,11 +23,12 @@ export const api = new Api().getInstance();
 
 export const createRequest = (payload) => {
   const token = localStorage.getItem('token');
+  console.log('token :>> ', token);
   return api({
     ...payload,
     headers: {
       ...payload.headers,
-      'x-access-token': token
+      'x-access-token': token || ''
     }
   });
 //   return Promise.resolve({
