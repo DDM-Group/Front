@@ -13,7 +13,7 @@ import {createRequest} from '../../rootSagas';
 
 export function* fetchMasterclassWorker({type, params = {}}) { //first arg = action
   const { _id } = params 
-  let url = _id ? `${API_HTTP}/masterclass/${_id}` : `${API_HTTP}/masterclass`
+  let url = _id ? `${API_HTTP}/masterclass/${_id}` : `${API_HTTP}/masterclass/mapped`
   if (params.type) {
     url = url.concat(`?type=${params.type}`)
   }
@@ -26,13 +26,17 @@ export function* fetchMasterclassWorker({type, params = {}}) { //first arg = act
     const response = yield call(createRequest, request);
     console.log('response :', response);
     if (type === ActionTypesMasterclass.FETCH_MASTERCLASS_REQUEST) {
-      yield put(fetchMasterclassSuccess(response.map(info => (
-        {
-          ...info,
-          photoUrl: `${API_HTTP}/images/${info.photo}`,
-          students: info.students.map( student => ({...student, photoUrl: `${API_HTTP}/images/${student.photo}`}))
-        }
-        )
+      yield put(fetchMasterclassSuccess(
+        Object.fromEntries(Object.entries(response).map(([key, infos]) => {
+          return [key, infos.map(info => (
+            {
+              ...info,
+              photoUrl: `${API_HTTP}/images/${info.photo}`,
+              students: info.students.map( student => ({...student, photoUrl: `${API_HTTP}/images/${student.photo}`}))
+            }
+            )
+          )]
+        })
       )));
     } else {
       yield put(fetchInfoSuccess(

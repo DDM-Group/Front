@@ -20,7 +20,8 @@ export const ActionTypesUsers = {
 
 export const initialUserState = {
     loggedIn: false,
-    user: {}
+    user: {},
+    message: {}
 };
 
 export default function reducer(
@@ -35,12 +36,14 @@ export default function reducer(
           localStorage.setItem("token", accessToken)
           return {
             loggedIn: true,
-            user
+            user,
+            message: {}
           }
         case ActionTypesUsers.SIGN_IN_USER_FAILURE: 
           return {
             loggedIn: false,
-            error: action.error
+            user: {},
+            message: { failure: true, text: action.error.message}
         }
         case ActionTypesUsers.SIGN_OUT_USER_REQUEST:
           localStorage.clear()
@@ -51,23 +54,27 @@ export default function reducer(
         case ActionTypesUsers.AUTOUPDATE_USER_SUCCESS:
           return {
             loggedIn: false,
-            user: action.payload
+            user: action.payload,
+            message: {}
           }
         case ActionTypesUsers.AUTOUPDATE_USER_FAILURE:
           return {
             loggedIn: false,
-            user: {}
+            user: {},
+            message: { failure: true, text: action.error.message}
           }
 
         case ActionTypesUsers.FETCH_USER_PAGE_SUCCESS:
           return {
             ...state,
-            page: action.payload
+            page: action.payload,
+            message: {}
           }
         case ActionTypesUsers.FETCH_USER_PAGE_FAILURE:
           return {
             ...state,
-            error: action.error
+            error: action.error,
+            message: { failure: true, text: action.error.message}
           }
         
         default: 

@@ -1,14 +1,17 @@
 import React, {useState} from 'react'
-import { connect, useDispatch } from 'react-redux'
-import {signInUserRequest, signOutUserRequest} from '../redux/modules/users';
-import { Header, Button, Form, Modal, Menu, Icon } from 'semantic-ui-react'
+import { useDispatch, useSelector } from 'react-redux'
+import {signInUserRequest} from '../redux/modules/users';
+import { Message, Button, Form, Modal, Menu, Icon } from 'semantic-ui-react'
 
-function Login({signInUserRequest, isOpen, setOpen}) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+export default function Login({isOpen, setOpen}) {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
+    const message = useSelector(state => state.users.message)
+    const messageBlock = <Message positive={!message.failure} negative={message.failure}><Message.Header>{message.text}</Message.Header></Message>
 
     const login = () => {
-        signInUserRequest({ username, password });
+      dispatch(signInUserRequest({ username, password }));
     }
 
     return (
@@ -44,6 +47,7 @@ function Login({signInUserRequest, isOpen, setOpen}) {
                         onChange={(e) => {setPassword(e.target.value)}}/>
                     </Form.Field>
                 </Form>
+                {message && message.text && message.text !== '' ? messageBlock : <></>}
             </Modal.Content>
             <Modal.Actions>
                 <Button
@@ -55,14 +59,10 @@ function Login({signInUserRequest, isOpen, setOpen}) {
                   content="Войти"
                   labelPosition='right'
                   icon='checkmark'
-                  onClick={(e) => {e.preventDefault(); login(); setOpen(false)}}
+                  onClick={(e) => {e.preventDefault(); login(); }}
                   positive
                 />
             </Modal.Actions>
         </Modal>
     )
 }
-
-export default connect(null, {
-    signInUserRequest
-})(Login)

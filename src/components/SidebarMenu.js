@@ -32,18 +32,22 @@ export default function SidebarMenu () {
               <Icon name='book' />
               База знаний
           </Menu.Item>
-          <Menu.Item as={Link} to="/scouting">
-              <Icon name='user secret'/>
-              Разведка
-          </Menu.Item>
-          <Menu.Item as={Link} to="/masterclass">
-              <Icon name='graduation cap' /> 
-              Мастерклассы
-          </Menu.Item> 
-          <Menu.Item as={Link} to="/operation">
-              <Icon name='crosshairs' />
-              Высадки
-          </Menu.Item>
+          { user.id ? (
+            <>
+              <Menu.Item as={Link} to="/scouting">
+                  <Icon name='user secret'/>
+                  Разведка
+              </Menu.Item>
+              <Menu.Item as={Link} to="/masterclass">
+                  <Icon name='graduation cap' /> 
+                  Мастерклассы
+              </Menu.Item> 
+              <Menu.Item as={Link} to="/operation">
+                  <Icon name='crosshairs' />
+                  Высадки
+              </Menu.Item>
+            </>
+          ) : <></>}
           <Menu.Item as={Link} to="/operation/view">
               <Icon name='shield alternate' />
               Боевой интерфейс
