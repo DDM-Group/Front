@@ -11,7 +11,7 @@ export default function Info ({mcs, name}) {
     const dispatch = useDispatch()
 
     const first = mcs[0]
-    const firstRows = Object.entries(first.data || {}).map(([key, value]) => <p key={key}>{`${key}: ${value}`}</p>);
+    const cardRows = Object.entries(first.data || {}).filter((item, index) => index < 2).map(([key, value]) => <p key={key}>{`${key}: ${value.slice(0,70)}${value.length > 70 ? '...' : ''}`}</p>);
 
     const panes = mcs.map(mc => {
         const date = new Date(mc.date)
@@ -40,7 +40,7 @@ export default function Info ({mcs, name}) {
                           Количество занятий: {mcs.length}
                       </List.Content>
                     </List.Item>
-                    {firstRows.filter((item, index) => index < 2)}
+                    {cardRows}
                   </List>
                 </Card.Description>
             </Card.Content>
@@ -55,8 +55,8 @@ export default function Info ({mcs, name}) {
         trigger={card}
         >
             <Modal.Header>{first.name}</Modal.Header>
-            <Modal.Content image>
-                <Image size='medium' src={first.photo ? `${first.photoUrl}` : eye} wrapped />
+            <Modal.Content image scrolling>
+                <Image size='medium' src={first.photo ? `${first.photoUrl}` : eye} spaced="right" />
                 <Tab  
                   menu={{ fluid: true, vertical: true, tabular: 'right' }}
                   panes={panes}

@@ -16,6 +16,7 @@ export default function Info ({info}) {
     const isButtonRegisterDisabled = isUserRegistred;
     const isButtonActivateDisabled = !(moment().isBetween(moment(info.date).subtract(15, 'minutes'), moment(info.date)))
     const messageBlock = <Message positive={!message.failure} negative={message.failure}><Message.Header>{message.text}</Message.Header></Message>
+    const cardRows = Object.entries(info.data || {}).filter((item, index) => index < 2).map(([key, value]) => <p key={key}>{`${key}: ${value.slice(0,70)}${value.length > 70 ? '...' : ''}`}</p>);
     const infoRows = Object.entries(info.data || {}).map(([key, value]) => <p key={key}>{`${key}: ${value}`}</p>);
     const users = info.users ? info.users.map(
         user => (
@@ -52,7 +53,7 @@ export default function Info ({info}) {
                           Количество заявок: {info.users.length}/{info.max_users}
                       </List.Content>
                     </List.Item>
-                    {infoRows.filter((item, index) => index < 2)}
+                    {cardRows}
                   </List>
                 </Card.Description>
             </Card.Content>
@@ -79,8 +80,8 @@ export default function Info ({info}) {
                 />
               ): <></>}
             </Modal.Header>
-            <Modal.Content image>
-                <Image size='medium' src={info.photo ? `${info.photoUrl}` : eye} wrapped />
+            <Modal.Content image scrolling>
+                <Image size='medium' src={info.photo ? `${info.photoUrl}` : eye} spaced="right"/>
                 <Modal.Description>
                   <Table size="large">
                     <Table.Header>

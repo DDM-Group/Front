@@ -5,6 +5,7 @@ import eye from '../../assets/img/eye.svg'
 export default function Info ({info}) {
     const [open, setOpen] = useState(false)
 
+    const cardRows = Object.entries(info.data || {}).filter((item, index) => index < 3).map(([key, value]) => <p key={key}>{`${key}: ${value.slice(0,70)}${value.length > 70 ? '...' : ''}`}</p>);
     const infoRows = Object.entries(info.data || {}).map(([key, value]) => <p key={key}>{`${key}: ${value}`}</p>);
     
     const card = (
@@ -18,7 +19,7 @@ export default function Info ({info}) {
                 <Card.Meta>{info.category}</Card.Meta>
                 <Card.Description>
                   <List>
-                    {infoRows.filter((item, index) => index < 3)}
+                    {cardRows}
                   </List>
                 </Card.Description>
             </Card.Content>
@@ -33,8 +34,8 @@ export default function Info ({info}) {
         trigger={card}
         >
             <Modal.Header>{info.name}</Modal.Header>
-            <Modal.Content image>
-                <Image size='medium' src={info.photo ? `${info.photoUrl}` : eye} wrapped />
+            <Modal.Content image scrolling>
+                <Image size='medium' src={info.photo ? `${info.photoUrl}` : eye} spaced="right"/>
                 <Modal.Description>
                     {infoRows}
                 </Modal.Description>
