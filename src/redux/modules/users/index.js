@@ -49,7 +49,8 @@ export default function reducer(
           localStorage.clear()
           return {
             loggedIn: false,
-            user: {}
+            user: {},
+            message: {}
         }
         case ActionTypesUsers.AUTOUPDATE_USER_SUCCESS:
           return {
