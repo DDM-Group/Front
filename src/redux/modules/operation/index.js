@@ -1,19 +1,21 @@
 import {ActionTypesUsers} from '../users'
 
 export const ActionTypesOperation = {
-    FETCH_OPERATION_REQUEST: 'masterclass/FETCH_OPERATION_REQUEST',
-    FETCH_OPERATION_SUCCESS: 'masterclass/FETCH_OPERATION_SUCCESS',
-    FETCH_OPERATION_FAILURE: 'masterclass/FETCH_OPERATION_FAILURE',
-    FETCH_INFO_REQUEST: 'masterclass/FETCH_INFO_REQUEST',
-    FETCH_INFO_SUCCESS: 'masterclass/FETCH_INFO_SUCCESS',
-    FETCH_INFO_FAILURE: 'masterclass/FETCH_INFO_FAILURE',
-    REGISTER_OPERATION_REQUEST: 'masterclass/REGISTER_OPERATION_REQUEST',
-    REGISTER_OPERATION_SUCCESS: 'masterclass/REGISTER_OPERATION_SUCCESS',
-    REGISTER_OPERATION_FAILURE: 'masterclass/REGISTER_OPERATION_FAILURE',
-    FETCH_OPERATION_VIEW_REQUEST: 'masterclass/FETCH_OPERATION_VIEW_REQUEST',
-    FETCH_OPERATION_VIEW_SUCCESS: 'masterclass/FETCH_OPERATION_VIEW_SUCCESS',
-    FETCH_OPERATION_VIEW_FAILURE: 'masterclass/FETCH_OPERATION_VIEW_FAILURE',
-
+    FETCH_OPERATION_REQUEST: 'operation/FETCH_OPERATION_REQUEST',
+    FETCH_OPERATION_SUCCESS: 'operation/FETCH_OPERATION_SUCCESS',
+    FETCH_OPERATION_FAILURE: 'operation/FETCH_OPERATION_FAILURE',
+    FETCH_INFO_REQUEST: 'operation/FETCH_INFO_REQUEST',
+    FETCH_INFO_SUCCESS: 'operation/FETCH_INFO_SUCCESS',
+    FETCH_INFO_FAILURE: 'operation/FETCH_INFO_FAILURE',
+    REGISTER_OPERATION_REQUEST: 'operation/REGISTER_OPERATION_REQUEST',
+    REGISTER_OPERATION_SUCCESS: 'operation/REGISTER_OPERATION_SUCCESS',
+    REGISTER_OPERATION_FAILURE: 'operation/REGISTER_OPERATION_FAILURE',
+    FETCH_OPERATION_VIEW_REQUEST: 'operation/FETCH_OPERATION_VIEW_REQUEST',
+    FETCH_OPERATION_VIEW_SUCCESS: 'operation/FETCH_OPERATION_VIEW_SUCCESS',
+    FETCH_OPERATION_VIEW_FAILURE: 'operation/FETCH_OPERATION_VIEW_FAILURE',
+    ACTIVATE_USER_REQUEST: 'operation/ACTIVATE_USER_REQUEST',
+    ACTIVATE_USER_SUCCESS: 'operation/ACTIVATE_USER_SUCCESS',
+    ACTIVATE_USER_FAILURE: 'operation/ACTIVATE_USER_FAILURE',
   };
   
   export const initialOperationState = {
@@ -73,6 +75,17 @@ export const ActionTypesOperation = {
           message: {}
         }
       case ActionTypesOperation.FETCH_OPERATION_VIEW_FAILURE:
+        return {
+          ...state,
+          message: { failure: true, text: action.error.message}
+        }
+
+      case ActionTypesOperation.ACTIVATE_USER_SUCCESS:
+        return {
+          ...state,
+          message: { failure: false, text: 'Вы успешно активировались!' }
+        }
+      case ActionTypesOperation.ACTIVATE_USER_FAILURE:
         return {
           ...state,
           message: { failure: true, text: action.error.message}
@@ -145,5 +158,19 @@ export const ActionTypesOperation = {
   
   export const fetchOperationViewFailure = (error) => ({
     type: ActionTypesOperation.FETCH_OPERATION_VIEW_FAILURE,
+    error
+  });
+  
+  export const activateUserRequest = (params) => ({
+    type: ActionTypesOperation.ACTIVATE_USER_REQUEST,
+    params
+  });
+  
+  export const activateUserSuccess = () => ({
+    type: ActionTypesOperation.ACTIVATE_USER_SUCCESS
+  });
+  
+  export const activateUserFailure = (error) => ({
+    type: ActionTypesOperation.ACTIVATE_USER_FAILURE,
     error
   });

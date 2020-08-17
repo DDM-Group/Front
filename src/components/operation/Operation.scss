@@ -6,6 +6,18 @@
     box-shadow: 0 1px 2px #ccc;
     background: #fafafa;
     border-radius: 0.2rem;
-    margin-top: 1rem;
     padding: 1rem;
+}
+
+.viewColumn {
+    padding: 0.2rem !important;
+}
+
+.watcherCard {
+    &.alive {
+        box-shadow: 0 0 20px rgb(0, 155, 0) !important;
+    }
+    &.dead {
+        box-shadow: 0 0 20px rgb(200, 0, 0) !important;
+    }
 }

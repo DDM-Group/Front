@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector  } from 'react-redux'
 import {fetchOperationRequest} from '../../redux/modules/operation'
-import { Card, Loader } from 'semantic-ui-react'
+import { Card, Loader, Header } from 'semantic-ui-react'
 import Info from './Info'
 
 function InfoPanel() {
@@ -23,6 +23,9 @@ function InfoPanel() {
     });
     return (
         <>
+            <Header as='h2' attached='top'>
+                Высадки
+            </Header>
             <Loader active={operation.length === 0}/>
             <Card.Group stackable={true} className={"cardGroup"}>
                 {cards}

@@ -14,7 +14,7 @@ export const ActionTypesMasterclass = {
   };
   
   export const initialMasterclassState = {
-    list: [],
+    list: {},
     info: {},
     message: {}
   };

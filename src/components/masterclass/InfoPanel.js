@@ -16,11 +16,16 @@ function InfoPanel() {
     console.log('masterclass :', masterclass);
     console.log('error :', error);
 
-    const cards = masterclass.map(info => {
+    const cards = Object.entries(masterclass).map(([name, mcs]) => {
         return (
-            <Info info={info}/>
+            <Info key={name} mcs={mcs} name={name}/>
         )
-    });
+    })
+    // const cards = masterclass.map(info => {
+    //     return (
+    //         <Info key={info && info.id} info={info}/>
+    //     )
+    // });
     return (
         <>
             <Loader active={masterclass.length === 0}/>

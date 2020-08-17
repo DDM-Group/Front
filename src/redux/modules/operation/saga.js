@@ -10,6 +10,8 @@ import {
   registerOperationFailure,
   fetchOperationViewFailure,
   fetchOperationViewSuccess, 
+  activateUserSuccess,
+  activateUserFailure
 } from './index';
 import {createRequest} from '../../rootSagas';
 
@@ -32,6 +34,7 @@ export function* fetchOperationWorker({type, params = {}}) { //first arg = actio
         {
           ...info,
           photoUrl: `${API_HTTP}/images/${info.photo}`,
+          manager: {...info.manager, photoUrl: `${API_HTTP}/images/${info.manager.photo}`},
           users: info.users.map( user => ({...user, photoUrl: `${API_HTTP}/images/${user.photo}`}))
         }
         )
@@ -98,11 +101,32 @@ export function* fetchOperationViewWorker({type, params = {}}) {
   }
 }
 
+export function* activateUserWorker({type, params = {}}) {
+  const { _id, opId } = params 
+  if ( _id) {
+    yield put(activateUserSuccess())
+  } else {
+    const url = `${API_HTTP}/user/activateOperation/${opId}`
+    const request = {
+      method: 'get',
+      url
+    };
+    try {
+        const response = yield call(createRequest, request);
+        console.log('response :>> ', response);
+        yield put(activateUserSuccess())
+    } catch (e) {
+      yield put(registerOperationFailure((e.response && e.response.data) || e));
+    }
+  }
+}
+
 export function* watchOperationActionsSaga() {
   yield all([
     takeEvery(ActionTypesOperation.FETCH_OPERATION_REQUEST, fetchOperationWorker),
     takeEvery(ActionTypesOperation.FETCH_INFO_REQUEST, fetchOperationWorker),
     takeEvery(ActionTypesOperation.REGISTER_OPERATION_REQUEST, registerOperationWorker),
-    takeEvery(ActionTypesOperation.FETCH_OPERATION_VIEW_REQUEST, fetchOperationViewWorker)
+    takeEvery(ActionTypesOperation.FETCH_OPERATION_VIEW_REQUEST, fetchOperationViewWorker),
+    takeEvery(ActionTypesOperation.ACTIVATE_USER_REQUEST, activateUserWorker)
   ]);
 }

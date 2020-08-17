@@ -61,7 +61,7 @@ export default function UserPanel() {
                         <Header>Имя : {user.name}</Header>
                         <p>Боевая группа: {user.group}</p>
                         <p>Жизни: <Rating icon='heart' rating={user.lives || 0} maxRating={10} disabled={true}/></p>
-                        <p>Уровень: <Rating icon='star' rating={user.level} maxRating={5} disabled={true}/></p>
+                        <p>Уровень: <Rating icon='star' rating={user.level} maxRating={3} disabled={true}/></p>
                         <Progress 
                             value={user.experience} 
                             total={user.level * 50} 
