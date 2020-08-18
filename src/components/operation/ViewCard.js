@@ -25,6 +25,7 @@ export default function ViewCard ({operation, open, setOpen}) {
                 <Header as='h4'>{operation.name}</Header>
                 <Card.Group
                   itemsPerRow={5}
+                  doubling
                   centered
                 >
                     {userCards}
@@ -32,9 +33,10 @@ export default function ViewCard ({operation, open, setOpen}) {
             </div>}
         >
         <Modal.Header>{operation.name}</Modal.Header>
-        <Modal.Content image>
+        <Modal.Content image scrolling>
           <Card.Group
             centered
+            doubling
             itemsPerRow={6}
           >
             {userCards}
