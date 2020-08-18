@@ -20,4 +20,12 @@
     &.dead {
         box-shadow: 0 0 20px rgb(200, 0, 0) !important;
     }
+    .image {
+        overflow: hidden;
+        img {
+            width: 15vw !important;
+            height: auto !important;
+            margin-left: -4rem !important;
+        }
+    }
 }

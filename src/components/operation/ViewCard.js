@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Header, Image, Modal, Button } from 'semantic-ui-react'
+import eye from '../../assets/img/eye.svg'
 
 export default function ViewCard ({operation, open, setOpen}) {
     const userCards = operation.users.filter(user => user.active).map(user => (
@@ -7,7 +8,7 @@ export default function ViewCard ({operation, open, setOpen}) {
           key={user._id}
           className={`watcherCard ${user.alive ? 'alive' : 'dead'}`}
         >
-            <Image src={user.gifUrl} wrapped ui={false} />
+           {user.gif ? <Image src={user.gifUrl} wrapped ui={false}/> : <></>}
             <Card.Content>
                 <Header as='h5'>{user.name}</Header>    
             </Card.Content>
