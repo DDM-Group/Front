@@ -34,7 +34,7 @@ export function* fetchOperationWorker({type, params = {}}) { //first arg = actio
         {
           ...info,
           photoUrl: `${API_HTTP}/images/${info.photo}`,
-          manager: {...info.manager, photoUrl: `${API_HTTP}/images/${info.manager.photo}`},
+          manager: info.manager && {...info.manager, photoUrl: `${API_HTTP}/images/${info.manager.photo}`},
           users: info.users.map( user => ({...user, photoUrl: `${API_HTTP}/images/${user.photo}`}))
         }
         )

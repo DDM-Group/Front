@@ -90,7 +90,8 @@ export default function Info ({info}) {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      <Header as='h4' image>
+                      {info.manager ? (
+                        <Header as='h4' image>
                         {info.manager.photo && info.manager.photo !== '' ?
                           <Image src={info.manager.photoUrl} avatar size='mini' /> :
                           <Icon name="user" size="mini"/>
@@ -100,6 +101,13 @@ export default function Info ({info}) {
                           <Header.Subheader>{info.manager.group}</Header.Subheader>
                         </Header.Content>
                       </Header>
+                      ) : (<Header as='h4' image>
+                             <Icon name="user" size="mini"/>
+                          <Header.Content>
+                            Отсутствует
+                          </Header.Content>
+                        </Header>)}
+                      
                     </Table.Body>
                   </Table>
                   <p>Количество заявок: {(info.users && info.users.length) || 0}/{info.max_users}</p>
