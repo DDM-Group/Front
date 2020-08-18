@@ -1,10 +1,14 @@
 .pusher {
-    max-width: calc(100% - 150px);
+    max-width: calc(100% - 110px);
     transform: none !important;
 }
 
 .leftSidebar {
+    width: 110px !important;
     position: sticky !important;
     float: left !important;
     transform: none !important;
+    .item {
+        padding: 0.7rem 0.3rem !important;
+    }
 }

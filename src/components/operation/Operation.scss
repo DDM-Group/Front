@@ -20,4 +20,8 @@
     &.dead {
         box-shadow: 0 0 20px rgb(200, 0, 0) !important;
     }
+
+    .content {
+        padding: 0.3rem !important;
+    }
 }
