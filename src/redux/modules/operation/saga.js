@@ -11,7 +11,9 @@ import {
   fetchOperationViewFailure,
   fetchOperationViewSuccess, 
   activateUserSuccess,
-  activateUserFailure
+  activateUserFailure,
+  killUserSuccess,
+  killUserFailure
 } from './index';
 import {createRequest} from '../../rootSagas';
 
@@ -116,7 +118,25 @@ export function* activateUserWorker({type, params = {}}) {
         console.log('response :>> ', response);
         yield put(activateUserSuccess())
     } catch (e) {
-      yield put(registerOperationFailure((e.response && e.response.data) || e));
+      yield put(activateUserFailure((e.response && e.response.data) || e));
+    }
+  }
+}
+
+export function* killUserWorker({type, params = {}}) {
+  const { _id } = params 
+  if ( _id) {
+    const url = `${API_HTTP}/user/${_id}/kill`
+    const request = {
+      method: 'get',
+      url
+    };
+    try {
+        const response = yield call(createRequest, request);
+        console.log('response :>> ', response);
+        yield put(killUserSuccess())
+    } catch (e) {
+      yield put(killUserFailure((e.response && e.response.data) || e));
     }
   }
 }
@@ -127,6 +147,7 @@ export function* watchOperationActionsSaga() {
     takeEvery(ActionTypesOperation.FETCH_INFO_REQUEST, fetchOperationWorker),
     takeEvery(ActionTypesOperation.REGISTER_OPERATION_REQUEST, registerOperationWorker),
     takeEvery(ActionTypesOperation.FETCH_OPERATION_VIEW_REQUEST, fetchOperationViewWorker),
-    takeEvery(ActionTypesOperation.ACTIVATE_USER_REQUEST, activateUserWorker)
+    takeEvery(ActionTypesOperation.ACTIVATE_USER_REQUEST, activateUserWorker),
+    takeEvery(ActionTypesOperation.KILL_USER_REQUEST, killUserWorker)
   ]);
 }

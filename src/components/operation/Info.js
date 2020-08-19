@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Button, Header, Image, Modal, Container, Table, Icon, Message, Card, List } from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux'
-import {registerOperationRequest, activateUserRequest} from '../../redux/modules/operation'
+import {registerOperationRequest, activateUserRequest, killUserRequest} from '../../redux/modules/operation'
 import eye from '../../assets/img/eye.svg'
 import moment from 'moment'
 
@@ -11,6 +11,8 @@ export default function Info ({info}) {
     const user = useSelector(state => state.users.user)
     console.log('user :>> ', user);
     const dispatch = useDispatch()
+    const isAdmin = user.roles && user.roles.indexOf('ROLE_ADMIN') !== -1;
+    const isModerator = user.roles && user.roles.indexOf('ROLE_MODERATOR') !== -1
 
     const isUserRegistred = info.users && info.users.findIndex(usr => usr._id === user.id) !== -1
     const isButtonRegisterDisabled = isUserRegistred;
@@ -19,18 +21,25 @@ export default function Info ({info}) {
     const cardRows = Object.entries(info.data || {}).filter((item, index) => index < 2).map(([key, value]) => <p key={key}>{`${key}: ${value.slice(0,70)}${value.length > 70 ? '...' : ''}`}</p>);
     const infoRows = Object.entries(info.data || {}).map(([key, value]) => <p key={key}>{`${key}: ${value}`}</p>);
     const users = info.users ? info.users.map(
-        user => (
-          <Table.Row key={user.username}>
+        usr => (
+          <Table.Row key={usr.username}>
             <Table.Cell>
               <Header as='h4' image>
-                {user.photo && user.photo !== '' ?
-                  <Image src={user.photoUrl} avatar size='mini' /> :
+                {usr.photo && usr.photo !== '' ?
+                  <Image src={usr.photoUrl} avatar size='mini' /> :
                   <Icon name="user" size="mini"/>
                 }
                 <Header.Content>
-                  {user.name}
-                  <Header.Subheader>{user.group}</Header.Subheader>
+                  {usr.name}
+                  <Header.Subheader>{usr.group}</Header.Subheader>
                 </Header.Content>
+                {isModerator &&
+                 <Button
+                          icon='user times'
+                          color='red'
+                          onClick={() => dispatch(killUserRequest({_id: usr._id}))}
+                    />
+                }
               </Header>
             </Table.Cell>
           </Table.Row>)
@@ -69,7 +78,7 @@ export default function Info ({info}) {
         >
             <Modal.Header>
               {info.name}
-              { user.roles && user.roles.indexOf('ROLE_ADMIN') !== -1 ? (
+              { isAdmin ? (
                 <Button
                   floated="right"
                   content="Активировать всех"
@@ -133,14 +142,25 @@ export default function Info ({info}) {
                     onClick={() => setOpen(false)}
                 />
                 { isUserRegistred ? (
-                  <Button
-                      content="Активировать"
-                      labelPosition='right'
-                      icon='crosshairs'
-                      color='blue'
-                      disabled={isButtonActivateDisabled}
-                      onClick={() => dispatch(activateUserRequest({_id: info._id}))}
-                />) : (
+                  <>
+                    <Button
+                          content="Активировать"
+                          labelPosition='right'
+                          icon='crosshairs'
+                          color='blue'
+                          disabled={isButtonActivateDisabled}
+                          onClick={() => dispatch(activateUserRequest({_id: info._id}))}
+                    />
+                    <Button
+                          content="Смерть"
+                          labelPosition='right'
+                          icon='user times'
+                          color='red'
+                          disabled={!isButtonActivateDisabled}
+                          onClick={() => dispatch(killUserRequest({_id: user.id}))}
+                    />
+                </>
+                ) : (
                   <Button 
                     content="Записаться" 
                     labelPosition='right'

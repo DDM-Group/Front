@@ -16,6 +16,9 @@ export const ActionTypesOperation = {
     ACTIVATE_USER_REQUEST: 'operation/ACTIVATE_USER_REQUEST',
     ACTIVATE_USER_SUCCESS: 'operation/ACTIVATE_USER_SUCCESS',
     ACTIVATE_USER_FAILURE: 'operation/ACTIVATE_USER_FAILURE',
+    KILL_USER_REQUEST: 'operation/ACTIVATE_USER_REQUEST',
+    KILL_USER_SUCCESS: 'operation/ACTIVATE_USER_SUCCESS',
+    KILL_USER_FAILURE: 'operation/ACTIVATE_USER_FAILURE',
   };
   
   export const initialOperationState = {
@@ -91,6 +94,17 @@ export const ActionTypesOperation = {
           message: { failure: true, text: action.error.message}
         }
       
+        case ActionTypesOperation.KILL_USER_SUCCESS:
+          return {
+            ...state,
+            message: { failure: false, text: 'Смерть подтверждена!' }
+          }
+        case ActionTypesOperation.KILL_USER_FAILURE:
+          return {
+            ...state,
+            message: { failure: true, text: action.error.message}
+          }
+
       case ActionTypesUsers.SIGN_OUT_USER_REQUEST:
         return {
           ...initialOperationState
@@ -172,5 +186,19 @@ export const ActionTypesOperation = {
   
   export const activateUserFailure = (error) => ({
     type: ActionTypesOperation.ACTIVATE_USER_FAILURE,
+    error
+  });
+
+  export const killUserRequest = (params) => ({
+    type: ActionTypesOperation.KILL_USER_REQUEST,
+    params
+  });
+  
+  export const killUserSuccess = () => ({
+    type: ActionTypesOperation.KILL_USER_SUCCESS
+  });
+  
+  export const killUserFailure = (error) => ({
+    type: ActionTypesOperation.KILL_USER_FAILURE,
     error
   });
