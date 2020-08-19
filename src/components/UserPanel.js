@@ -110,7 +110,7 @@ export default function UserPanel() {
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-                <Grid.Column floated="right" stretched={false} width={2}>
+                <Grid.Column floated="right" stretched={false} width={4}>
                     <Button
                         content="Выйти"
                         color='black'
