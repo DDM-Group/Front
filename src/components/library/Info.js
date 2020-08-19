@@ -39,6 +39,7 @@ export default function Info ({info}) {
                 <Modal.Description>
                     {infoRows}
                 </Modal.Description>
+                {info.attachemntsUrls.map(attach => (<>{attach.indexOf('video') !== -1 ? <video><source src={attach}/></video> : <Image src={attach}/> }</>))}
             </Modal.Content>
             <Modal.Actions>
                 <Button
