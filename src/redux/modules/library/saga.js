@@ -1,5 +1,6 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { API_HTTP } from '../../../configs/environment';
+
 import {
   ActionTypesLibrary,
   fetchLibraryFailure,
@@ -24,9 +25,9 @@ export function* fetchLibraryWorker({type, params = {}}) { //first arg = action
     const response = yield call(createRequest, request);
     console.log('response :', response);
     if (type === ActionTypesLibrary.FETCH_LIBRARY_REQUEST) {
-      yield put(fetchLibrarySuccess(response.map(info => ({...info, photoUrl: `${API_HTTP}/images/${info.photo}`}))));
+      yield put(fetchLibrarySuccess(response.map(info => ({...info, photoUrl: `${API_HTTP}/images/${info.photo}`, attachmentUrls: info.attachments && info.attachments.map( attach => `${API_HTTP}/${attach}`)}))));
     } else {
-      yield put(fetchInfoSuccess({...response, photoUrl: `${API_HTTP}/images/${response.photo}`}));
+      yield put(fetchInfoSuccess({...response, photoUrl: `${API_HTTP}/images/${response.photo}`, attachmentUrls: response.attachments && response.attachments.map( attach => `${API_HTTP}/${attach}`)}));
     }
   } catch (e) {
     if (type === ActionTypesLibrary.FETCH_LIBRARY_REQUEST) {

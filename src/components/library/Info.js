@@ -38,7 +38,9 @@ export default function Info ({info}) {
                 <Image size='medium' src={info.photo ? `${info.photoUrl}` : eye} spaced="right"/>
                 <Modal.Description>
                     {infoRows}
+                    {info.attachmentUrls && info.attachmentUrls.map(attach => (<>{attach.indexOf('video') !== -1 ? <video controls="controls" width="400" height="300" src={attach}> </video> : <Image src={attach}/> }</>))}
                 </Modal.Description>
+
             </Modal.Content>
             <Modal.Actions>
                 <Button
