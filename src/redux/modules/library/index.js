@@ -55,9 +55,10 @@ export const ActionTypesLibrary = {
   }
   
   // Action Creators
-  export const fetchLibraryRequest = () => ({
-    type: ActionTypesLibrary.FETCH_LIBRARY_REQUEST
-  });
+export const fetchLibraryRequest = (params) => ({
+  type: ActionTypesLibrary.FETCH_LIBRARY_REQUEST,
+  params
+});
   
   export const fetchLibrarySuccess = (payload) => ({
     type: ActionTypesLibrary.FETCH_LIBRARY_SUCCESS,
