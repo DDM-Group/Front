@@ -67,7 +67,7 @@ export default function UserPanel() {
                         <p>Уровень: <Rating icon='star' rating={user.level} maxRating={3} disabled={true}/></p>
                         <Progress 
                             value={user.experience} 
-                            total={user.level * 50} 
+                            total={user.level + 1 * 100} 
                             progress='ratio' 
                             indicating
                         />
