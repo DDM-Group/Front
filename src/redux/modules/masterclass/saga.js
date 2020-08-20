@@ -26,26 +26,9 @@ export function* fetchMasterclassWorker({type, params = {}}) { //first arg = act
     const response = yield call(createRequest, request);
     console.log('response :', response);
     if (type === ActionTypesMasterclass.FETCH_MASTERCLASS_REQUEST) {
-      yield put(fetchMasterclassSuccess(
-        Object.fromEntries(Object.entries(response).map(([key, infos]) => {
-          return [key, infos.map(info => (
-            {
-              ...info,
-              photoUrl: `${API_HTTP}/images/${info.photo}`,
-              students: info.students.map( student => ({...student, photoUrl: `${API_HTTP}/images/${student.photo}`}))
-            }
-            )
-          )]
-        })
-      )));
+      yield put(fetchMasterclassSuccess(response));
     } else {
-      yield put(fetchInfoSuccess(
-        {
-          ...response,
-          photoUrl: `${API_HTTP}/images/${response.photo}`,
-          students: response.students.map( student => ({...student, photoUrl: `${API_HTTP}/images/${student.photo}`}))
-        }
-      ));
+      yield put(fetchInfoSuccess(response));
     }
   } catch (e) {
     if (type === ActionTypesMasterclass.FETCH_MASTERCLASS_REQUEST) {
@@ -66,13 +49,7 @@ export function* registerMasterclassWorker({type, params = {}}) {
   try {
       const response = yield call(createRequest, request);
       console.log('response :>> ', response);
-      yield put(registerMasterclassSuccess(
-        {
-          ...response,
-          photoUrl: `${API_HTTP}/images/${response.photo}`,
-          students: response.students.map( student => ({...student, photoUrl: `${API_HTTP}/images/${student.photo}`}))
-        }
-      ))
+      yield put(registerMasterclassSuccess(response))
   } catch (e) {
     yield put(registerMasterclassFailure((e.response && e.response.data) || e));
   }

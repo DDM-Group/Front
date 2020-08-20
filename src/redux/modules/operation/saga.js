@@ -32,21 +32,13 @@ export function* fetchOperationWorker({type, params = {}}) { //first arg = actio
     const response = yield call(createRequest, request);
     console.log('response :', response);
     if (type === ActionTypesOperation.FETCH_OPERATION_REQUEST) {
-      yield put(fetchOperationSuccess(response.map(info => (
-        {
-          ...info,
-          photoUrl: `${API_HTTP}/images/${info.photo}`,
-          manager: info.manager && {...info.manager, photoUrl: `${API_HTTP}/images/${info.manager.photo}`},
-          users: info.users.map( user => ({...user, photoUrl: `${API_HTTP}/images/${user.photo}`}))
-        }
-        )
-      )));
+      yield put(fetchOperationSuccess(response));
     } else {
       yield put(fetchInfoSuccess(
         {
           ...response,
-          photoUrl: `${API_HTTP}/images/${response.photo}`,
-          users: response.users.map( user => ({...user, photoUrl: `${API_HTTP}/images/${user.photo}`}))
+          photo: `${API_HTTP}/images/${response.photo}`,
+          users: response.users
         }
       ));
     }
@@ -72,8 +64,8 @@ export function* registerOperationWorker({type, params = {}}) {
       yield put(registerOperationSuccess(
         {
           ...response,
-          photoUrl: `${API_HTTP}/images/${response.photo}`,
-          users: response.users.map( user => ({...user, photoUrl: `${API_HTTP}/images/${user.photo}`}))
+          photo: `${API_HTTP}/images/${response.photo}`,
+          users: response.users
         }
       ))
   } catch (e) {

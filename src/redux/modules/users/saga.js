@@ -39,7 +39,7 @@ export function* singInUserWorker({type, userInfo = {}}) {
   try {
       const response = yield call(createRequest, request);
       console.log('response :>> ', response);
-      yield put(signInUserSuccess({...response, photoUrl: `${API_HTTP}/images/${response.photo}`}))
+      yield put(signInUserSuccess(response))
   } catch (e) {;
       yield put(signInUserFailure((e.response && e.response.data) || e));
   }
@@ -54,7 +54,7 @@ export function* autoupdateUserWorker({type}) {
   try {
       const response = yield call(createRequest, request);
       console.log('response :>> ', response);
-      yield put(autoupdateUserSuccess({...response, photoUrl: `${API_HTTP}/images/${response.photo}`}))
+      yield put(autoupdateUserSuccess(response))
   } catch (e) {;
       yield put(autoupdateUserFailure((e.response && e.response.data) || e));
   }

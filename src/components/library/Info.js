@@ -12,7 +12,7 @@ export default function Info ({info}) {
         <Card >
             <Card.Content>
                 <Image
-                    src={info.photo ? `${info.photoUrl}` : eye}
+                    src={info.photo ? `${info.photo}` : eye}
                     style={{marginBottom: '1rem'}}
                 />
                 <Card.Header>{info.name}</Card.Header>
@@ -35,7 +35,7 @@ export default function Info ({info}) {
         >
             <Modal.Header>{info.name}</Modal.Header>
             <Modal.Content image scrolling>
-                <Image size='medium' src={info.photo ? `${info.photoUrl}` : eye} spaced="right"/>
+                <Image size='medium' src={info.photo ? `${info.photo}` : eye} spaced="right"/>
                 <Modal.Description>
                     {infoRows}
                     {info.attachmentUrls && info.attachmentUrls.map(attach => (<>{attach.indexOf('video') !== -1 ? <video controls="controls" width="400" height="300" src={attach}> </video> : <Image src={attach}/> }</>))}

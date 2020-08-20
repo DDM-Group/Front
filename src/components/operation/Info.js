@@ -26,7 +26,7 @@ export default function Info ({info}) {
             <Table.Cell>
               <Header as='h4' image>
                 {usr.photo && usr.photo !== '' ?
-                  <Image src={usr.photoUrl} avatar size='mini' /> :
+                  <Image src={usr.photo} avatar size='mini' /> :
                   <Icon name="user" size="mini"/>
                 }
                 <Header.Content>
@@ -49,7 +49,7 @@ export default function Info ({info}) {
         <Card >
             <Card.Content>
                 <Image
-                    src={info.photo ? `${info.photoUrl}` : eye}
+                    src={info.photo ? `${info.photo}` : eye}
                     style={{marginBottom: '1rem'}}
                 />
                 <Card.Header>{info.name}</Card.Header>
@@ -90,7 +90,7 @@ export default function Info ({info}) {
               ): <></>}
             </Modal.Header>
             <Modal.Content image scrolling>
-                <Image size='medium' src={info.photo ? `${info.photoUrl}` : eye} spaced="right"/>
+                <Image size='medium' src={info.photo ? `${info.photo}` : eye} spaced="right"/>
                 <Modal.Description>
                   <Table size="large">
                     <Table.Header>
@@ -102,7 +102,7 @@ export default function Info ({info}) {
                       {info.manager ? (
                         <Header as='h4' image>
                         {info.manager.photo && info.manager.photo !== '' ?
-                          <Image src={info.manager.photoUrl} avatar size='mini' /> :
+                          <Image src={info.manager.photo} avatar size='mini' /> :
                           <Icon name="user" size="mini"/>
                         }
                         <Header.Content>

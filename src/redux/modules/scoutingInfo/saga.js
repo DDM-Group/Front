@@ -25,9 +25,9 @@ export function* fetchScoutingInfoWorker({type, params = {}}) { //first arg = ac
         const response = yield call(createRequest, request);
         console.log('response :', response);
         if (type === ActionTypesScoutingInfo.FETCH_SCOUTINGINFO_REQUEST) {
-            yield put(fetchScoutingInfoSuccess(response.map(info => ({...info, photoUrl: `${API_HTTP}/images/${info.photo}`}))));
+            yield put(fetchScoutingInfoSuccess(response.map(info => ({...info, photo: `${API_HTTP}/images/${info.photo}`}))));
         } else {
-            yield put(fetchInfoSuccess({...response, photoUrl: `${API_HTTP}/images/${response.photo}`}));
+            yield put(fetchInfoSuccess({...response, photo: `${API_HTTP}/images/${response.photo}`}));
         }
     } catch (e) {
         if (type === ActionTypesScoutingInfo.FETCH_SCOUTINGINFO_REQUEST) {

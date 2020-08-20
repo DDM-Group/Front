@@ -22,13 +22,16 @@ export default function UserPanel() {
     const {exams = [], operations = []} = useSelector(state => state.users.page) || {}
     console.log('exams :>> ', exams);
     const examsRows = exams.map(ex => {
-        const success = ex.students && ex.students.indexOf(user.id) !== -1
+        const {success, points} = ex.result
         return (
             <Table.Row key={ex._id} negative={!success} positive={success}>
                 <Table.Cell>
                     <Label >{ex.name}</Label>
                 </Table.Cell>
                 <Table.Cell>{success ? (<Icon name='checkmark'/>) : (<Icon name='close'/>)}</Table.Cell>
+                <Table.Cell>
+                    {points ? points : 0}
+                </Table.Cell>
             </Table.Row>
         )
     })
@@ -41,7 +44,7 @@ export default function UserPanel() {
             <Table.Cell>{op.success ? (<Icon name='checkmark'/>) : (<Icon name='close'/>)}</Table.Cell>
             <Table.Cell>{op.all_points}</Table.Cell>
             <Table.Cell>
-                {op.points && op.points[user.id] ? op.points[user.id] : 0}
+                {op.result ? op.result : 0}
             </Table.Cell>
         </Table.Row>
     ))
@@ -53,7 +56,7 @@ export default function UserPanel() {
                         rounded={true}
                         size="medium"
                         floated="left"
-                        src={user.photo && user.photo !== '' ? user.photoUrl : eye}
+                        src={user.photo && user.photo !== '' ? user.photo : eye}
                     />
                 </Grid.Column>
                 <Grid.Column computer={10} mobile={16}>
@@ -100,6 +103,7 @@ export default function UserPanel() {
                                 <Table.Row>
                                     <Table.HeaderCell>Имя</Table.HeaderCell>
                                     <Table.HeaderCell>Успех</Table.HeaderCell>
+                                    <Table.HeaderCell>Получено баллов</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
                             <Table.Body>

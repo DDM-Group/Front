@@ -25,7 +25,7 @@ export default function Request ({info}) {
         <Card >
             <Card.Content>
                 <Image
-                    src={info.photo ? `${info.photoUrl}` : eye}
+                    src={info.photo ? `${info.photo}` : eye}
                     style={{marginBottom: '1rem'}}
                 />
                 <Card.Header>{info.name}</Card.Header>
@@ -51,7 +51,7 @@ export default function Request ({info}) {
         >
             <Modal.Header>{info.name}</Modal.Header>
             <Modal.Content image>
-                <Image size='medium' src={info.photo ? `${info.photoUrl}` : eye} wrapped />
+                <Image size='medium' src={info.photo ? `${info.photo}` : eye} wrapped />
                 <Modal.Description>
                     <p>Обект: {info.requestObject}</p>
                     <p>Место: {info.place}</p>

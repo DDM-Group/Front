@@ -16,7 +16,7 @@ export default function MCTab ({mc}) {
             <Table.Cell>
               <Header as='h4' image>
                 {student.photo && student.photo !== '' ?
-                  <Image src={student.photoUrl} avatar size='mini' /> :
+                  <Image src={student.photo} avatar size='mini' /> :
                   <Icon name="user" size="mini"/>
                 }
                 <Header.Content>

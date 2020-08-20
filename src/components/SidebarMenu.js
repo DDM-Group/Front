@@ -22,7 +22,7 @@ export default function SidebarMenu () {
           className="leftSidebar"
       >
         { user.id ? <Menu.Item as={Link} to="/user">
-            {user.photo !== '' ? <Image src={user.photoUrl} avatar size="mini"/> : <Icon name="user"/>}
+            {user.photo !== '' ? <Image src={user.photo} avatar size="mini"/> : <Icon name="user"/>}
             <p> {user.name}</p>
           </Menu.Item> : <Login
           isOpen={isOpenLogin}

@@ -27,7 +27,7 @@ export default function Info ({mcs, name}) {
         <Card >
             <Card.Content>
                 <Image
-                    src={first.photo ? `${first.photoUrl}` : eye}
+                    src={first.photo ? `${first.photo}` : eye}
                     style={{marginBottom: '1rem'}}
                 />
                 <Card.Header>{first.name}</Card.Header>
@@ -56,7 +56,7 @@ export default function Info ({mcs, name}) {
         >
             <Modal.Header>{first.name}</Modal.Header>
             <Modal.Content image scrolling>
-                <Image size='medium' src={first.photo ? `${first.photoUrl}` : eye} spaced="right" />
+                <Image size='medium' src={first.photo ? `${first.photo}` : eye} spaced="right" />
                 <Tab  
                   menu={{ fluid: true, vertical: true, tabular: 'right' }}
                   panes={panes}
