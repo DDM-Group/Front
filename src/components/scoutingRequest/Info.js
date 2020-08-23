@@ -37,6 +37,7 @@ export default function Info ({info}) {
                 <Image size='medium' src={info.photo ? `${info.photo}` : eye} wrapped />
                 <Modal.Description>
                     {infoRows}
+                    console.log(message)
                 </Modal.Description>
             </Modal.Content>
             <Modal.Actions>

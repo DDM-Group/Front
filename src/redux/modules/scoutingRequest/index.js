@@ -14,7 +14,8 @@ export const ActionTypesScoutingRequest = {
 
 export const initialScoutingRequestState = {
     list: [],
-    info: {}
+    info: {},
+    message: {}
 };
 
 export default function reducer(
@@ -40,6 +41,17 @@ export default function reducer(
                 ...state,
                 info: action.payload
             };
+
+        case ActionTypesScoutingRequest.REGISTER_SCOUTINGREQUEST_SUCCESS:
+            return {
+                ...state,
+                message: { failure: false, text: 'Вы успешно отправили запрос!' }
+            }
+        case ActionTypesScoutingRequest.REGISTER_SCOUTINGREQUEST_FAILURE:
+            return {
+                ...state,
+                message: { failure: true, text: action.error.message}
+            }
 
         case ActionTypesScoutingRequest.FETCH_INFO_FAILURE:
             return {

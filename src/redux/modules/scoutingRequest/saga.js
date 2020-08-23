@@ -2,6 +2,7 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { API_HTTP } from '../../../configs/environment';
 import {
     ActionTypesScoutingRequest,
+    fetchScoutingRequestRequest,
     fetchScoutingRequestFailure,
     fetchScoutingRequestSuccess,
     fetchInfoFailure,
@@ -54,6 +55,7 @@ export function* registerScoutingRequestWorker({type, params = {}}) {
     try {
         const response = yield call(createRequest, request);
         console.log('response :>> ', response);
+        yield put(fetchScoutingRequestRequest())
         yield put(registerScoutingRequestSuccess(response))
     } catch (e) {
         yield put(registerScoutingRequestFailure((e.response && e.response.data) || e));
