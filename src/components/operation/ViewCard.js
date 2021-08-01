@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Header, Image, Modal, Button } from 'semantic-ui-react'
+import { Card, Header, Image, Modal, Button, Label } from 'semantic-ui-react'
 import eye from '../../assets/img/eye.svg'
 
 export default function ViewCard ({operation, open, setOpen}) {
@@ -10,7 +10,8 @@ export default function ViewCard ({operation, open, setOpen}) {
         >
            {user.gif ? <Image src={user.gifUrl} wrapped ui={false}/> : <></>}
             <Card.Content>
-                <Header as='h6'>{user.name}</Header>    
+                <Header as='h6'>{user.name}</Header>
+                <Label>{user.experience || 0}</Label>
             </Card.Content>
         </Card>
     ))

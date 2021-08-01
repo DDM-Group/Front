@@ -12,7 +12,7 @@ export const ActionTypesMasterclass = {
     REGISTER_MASTERCLASS_FAILURE: 'masterclass/REGISTER_MASTERCLASS_FAILURE'
 
   };
-  
+
   export const initialMasterclassState = {
     list: {},
     info: {},
