@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Button, Header, Image, Modal, Container, Table, Icon, Message, Card, List } from 'semantic-ui-react'
+import {Button, Header, Image, Modal, Container, Table, Icon, Message, Card, List, Progress} from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux'
 import {registerOperationRequest, activateUserRequest, killUserRequest} from '../../redux/modules/operation'
 import eye from '../../assets/img/eye.svg'
@@ -9,10 +9,11 @@ export default function Info ({info}) {
     const [open, setOpen] = useState(false)
     const message = useSelector(state => state.operation.message)
     const user = useSelector(state => state.users.user)
-    console.log('user :>> ', user);
+    console.log('info :>> ', info);
     const dispatch = useDispatch()
     const isAdmin = user.roles && user.roles.indexOf('ROLE_ADMIN') !== -1;
     const isModerator = user.roles && user.roles.indexOf('ROLE_MODERATOR') !== -1
+
 
     const isUserRegistred = info.users && info.users.findIndex(usr => usr._id === user.id) !== -1
     const isButtonRegisterDisabled = isUserRegistred;
@@ -44,7 +45,11 @@ export default function Info ({info}) {
             </Table.Cell>
           </Table.Row>)
     ) : [];
-    
+    let cardColor = "green"
+    if (info.panic >= 3)
+        cardColor = 'yellow'
+    if (info.panic >=5)
+        cardColor = 'red'
     const card = (
         <Card >
             <Card.Content>
@@ -61,6 +66,12 @@ export default function Info ({info}) {
                       <List.Content>
                           Количество заявок: {info.users.length}/{info.max_users}
                       </List.Content>
+                        <Progress
+                            value={info.panic}
+                            total={5}
+                            progress='ratio'
+                            color = {cardColor}
+                        />
                     </List.Item>
                     {cardRows}
                   </List>
@@ -119,6 +130,10 @@ export default function Info ({info}) {
                       
                     </Table.Body>
                   </Table>
+                    <div className="ui indicating progress">
+                        <div className="bar"></div>
+                        <div className="label">Уровень тревожности</div>
+                    </div>
                   <p>Количество заявок: {(info.users && info.users.length) || 0}/{info.max_users}</p>
                   {infoRows}
                   <Table size="large">

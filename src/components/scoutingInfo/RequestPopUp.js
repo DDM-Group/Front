@@ -38,19 +38,19 @@ export default function RequestPopUp({ isOpen, setOpen, info}) {
                     <Form.Field>
                         <label>Объект запроса</label>
                         <input
-                            placeholder='requestObject'
+                            placeholder='Объект запроса'
                             onChange={(e) => {setRequestObject(e.target.value)}}/>
                     </Form.Field>
                     <Form.Field>
                         <label>Место</label>
                         <input
-                            placeholder='place'
+                            placeholder='Место'
                             onChange={(e) => {setPlace(e.target.value)}}/>
                     </Form.Field>
                     <Form.Field>
                         <label>Задача</label>
                         <input
-                            placeholder='task'
+                            placeholder='Задача'
                             onChange={(e) => {setTask(e.target.value)}}/>
                     </Form.Field>
                 </Form>
@@ -71,7 +71,7 @@ export default function RequestPopUp({ isOpen, setOpen, info}) {
                         requestObject,
                         place,
                         task
-                    }))}
+                    }), setOpen(false))}
                 />
             </Modal.Actions>
         </Modal>

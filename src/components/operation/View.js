@@ -7,6 +7,7 @@ import ViewCard from './ViewCard'
 export default function View () {
     const dispatch = useDispatch();
     const view = useSelector(state => state.operation.view, shallowEqual) || []
+    const isLoading = useSelector(state => state.operation.isLoading, shallowEqual) || false;
     const [openedOperation, setOpenedOperation] = useState()
 
     useEffect(
@@ -40,7 +41,7 @@ export default function View () {
     // }
     return (
         <>
-            <Loader active={view.length === 0}/>
+            <Loader active={isLoading && view.length === 0}/>
             <Grid columns={2} stackable>
                 {columns}
             </Grid>

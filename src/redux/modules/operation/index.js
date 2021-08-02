@@ -25,7 +25,8 @@ export const ActionTypesOperation = {
     list: [],
     info: {},
     message: {},
-    view: []
+    view: [],
+    isLoading: false
   };
   
   export default function reducer(
@@ -74,13 +75,21 @@ export const ActionTypesOperation = {
       case ActionTypesOperation.FETCH_OPERATION_VIEW_SUCCESS:
         return {
           ...state,
+          isLoading: false,
           view: action.payload,
           message: {}
         }
       case ActionTypesOperation.FETCH_OPERATION_VIEW_FAILURE:
         return {
           ...state,
+          isLoading: false,
           message: { failure: true, text: action.error.message}
+        }
+
+      case ActionTypesOperation.FETCH_OPERATION_VIEW_REQUEST:
+        return {
+          ...state,
+          isLoading: true
         }
 
       case ActionTypesOperation.ACTIVATE_USER_SUCCESS:
