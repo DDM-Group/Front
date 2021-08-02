@@ -75,13 +75,13 @@ export default function Info ({mcs, name}) {
                     icon='angle left'
                     onClick={() => setOpen(false)}
                 />
-                <Button 
+                {/*                <Button
                     content="Записаться" 
                     labelPosition='right'
                     icon='checkmark'
                     positive
                     onClick={() => dispatch(registerMasterclassRequest({_id: mcs[activeTab]._id}))}
-                />
+                />*/}
             </Modal.Actions>
         </Modal>
     
