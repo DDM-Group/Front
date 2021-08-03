@@ -104,7 +104,7 @@ export default function Info ({info}) {
               ): <></>}
             </Modal.Header>
             <Modal.Content image scrolling>
-                <Image size='medium' src={info.photo ? `${info.photo}` : eye} spaced="right"/>
+                <Image size='huge' src={info.photo ? `${info.photo}` : eye} spaced="right" wrapped/>
                 <Modal.Description>
                   <Table size="large">
                     <Table.Header>

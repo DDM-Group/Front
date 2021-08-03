@@ -56,7 +56,7 @@ export default function Info ({mcs, name}) {
         >
             <Modal.Header>{first.name}</Modal.Header>
             <Modal.Content image scrolling>
-                <Image size='medium' src={first.photo ? `${first.photo}` : eye} spaced="right" />
+                <Image size='huge' src={first.photo ? `${first.photo}` : eye} spaced="right" wrapped/>
                 <Tab  
                   menu={{ fluid: true, vertical: true, tabular: 'right' }}
                   panes={panes}
