@@ -35,7 +35,7 @@ export default function Info ({info}) {
         >
             <Modal.Header>{info.name}</Modal.Header>
             <Modal.Content image scrolling>
-                <Image size='huge' src={info.photo ? `${info.photo}` : eye} spaced="right" wrapped/>
+                <Image size='medium' src={info.photo ? `${info.photo}` : eye} spaced="right"/>
                 <Modal.Description>
                     {infoRows}
                     {info.attachmentUrls && info.attachmentUrls.map(attach => (<>{attach.indexOf('video') !== -1 ? <video controls="controls" width="400" height="300" src={attach}> </video> : <Image src={attach}/> }</>))}

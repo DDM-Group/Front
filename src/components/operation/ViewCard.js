@@ -11,7 +11,7 @@ export default function ViewCard ({operation, open, setOpen}) {
            {user.gif ? <Image src={user.gifUrl} wrapped ui={false}/> : <></>}
             <Card.Content>
                 <Header as='h6'>{user.name}</Header>
-        {/*       <Label>{user.experience || 0}</Label> */}
+                <Label>{user.experience || 0}</Label>
             </Card.Content>
         </Card>
     ))

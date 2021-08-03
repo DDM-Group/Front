@@ -34,7 +34,7 @@ export default function Info ({info}) {
         >
             <Modal.Header>{info.name}</Modal.Header>
             <Modal.Content image>
-                <Image size='huge' src={info.photo ? `${info.photo}` : eye} wrapped />
+                <Image size='medium' src={info.photo ? `${info.photo}` : eye} wrapped />
                 <Modal.Description>
                     {infoRows}
                     console.log(message)
