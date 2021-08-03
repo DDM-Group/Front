@@ -66,12 +66,15 @@ export default function Info ({info}) {
                       <List.Content>
                           Количество заявок: {info.users.length}/{info.max_users}
                       </List.Content>
-                        <Progress
-                            value={info.panic}
-                            total={5}
-                            progress='ratio'
-                            color = {cardColor}
-                        />
+                        <div className="ui indicating progress">
+                            <Progress
+                                value={info.panic}
+                                total={5}
+                                progress='ratio'
+                                color = {cardColor}
+                            />
+                            <div className="label">Уровень тревожности</div>
+                        </div>
                     </List.Item>
                     {cardRows}
                   </List>
@@ -101,7 +104,7 @@ export default function Info ({info}) {
               ): <></>}
             </Modal.Header>
             <Modal.Content image scrolling>
-                <Image size='medium' src={info.photo ? `${info.photo}` : eye} spaced="right"/>
+                <Image size='huge' src={info.photo ? `${info.photo}` : eye} spaced="right" wrapped/>
                 <Modal.Description>
                   <Table size="large">
                     <Table.Header>
@@ -131,7 +134,12 @@ export default function Info ({info}) {
                     </Table.Body>
                   </Table>
                     <div className="ui indicating progress">
-                        <div className="bar"></div>
+                        <Progress
+                            value={info.panic}
+                            total={5}
+                            progress='ratio'
+                            color = {cardColor}
+                        />
                         <div className="label">Уровень тревожности</div>
                     </div>
                   <p>Количество заявок: {(info.users && info.users.length) || 0}/{info.max_users}</p>
@@ -176,7 +184,7 @@ export default function Info ({info}) {
                     />
                 </>
                 ) : (
-                  <Button 
+                  <Button
                     content="Записаться" 
                     labelPosition='right'
                     icon='checkmark'
